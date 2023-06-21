@@ -34,16 +34,24 @@ export default function App() {
         <NavigationContainer>
             <Tab.Navigator
                 screenOptions={({ route }) => ({
-                    headerShown: false,
+                    headerShown: true,
                     tabBarIcon: ({ focused, color, size }) =>
                         getTabBarIcon(route, focused, color, size),
                     tabBarInactiveTintColor: "gray",
                     tabBarActiveTintColor: "tomato",
                 })}
             >
-                <Tab.Screen name="Profile" component={Profile} />
+                <Tab.Screen
+                    name="Profile"
+                    component={Profile}
+                    options={{ headerTitle: "Profile" }}
+                />
 
-                <Tab.Screen name="Settings" component={Settings} />
+                <Tab.Screen
+                    name="Settings"
+                    component={Settings}
+                    options={{ headerTitle: "Settings" }}
+                />
             </Tab.Navigator>
         </NavigationContainer>
     );
