@@ -132,9 +132,7 @@ export default function Profile() {
                                         }}
                                     >
                                         <Image
-                                            source={{
-                                                uri: "https://i.pinimg.com/originals/cc/2e/01/cc2e011cc5236801ee8fd6d2fc5dc2c5.jpg",
-                                            }}
+                                            source={require("./Images/profile-placeholder.png")}
                                             style={styles.profileImg}
                                         />
                                         <TouchableOpacity
