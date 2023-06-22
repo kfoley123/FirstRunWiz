@@ -33,9 +33,22 @@ export default function Profile() {
     };
 
     const ProfileSchema = Yup.object().shape({
-        name: Yup.string().required("name is required"),
-        email: Yup.string().required("email is required"),
-        phone: Yup.string().required("Phone number is required"),
+        name: Yup.string()
+            .min(4, "Must be at least 4 characters")
+            .max(50, "Must be less than 50 characters")
+            .required("name is required"),
+        email: Yup.string()
+            .matches(
+                /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                "Invalid email address"
+            )
+            .max(256, "Must be less than 256 characters")
+            .required("email is required"),
+        phone: Yup.string()
+            .matches(/^[0-9]*$/, "Invalid phone number")
+            .min(10, "Must be 10 digits")
+            .max(10, "Must be 10 digits")
+            .required("Phone number is required"),
     });
 
     return (
