@@ -19,6 +19,7 @@ import CustomButton from "../Components/CustomButton";
 type AvailableDay = { value: number; label: string; checked: boolean };
 
 type SettingsValues = {
+    businessName: string;
     availableDays: AvailableDay[];
     deposit: string;
     regularHoursStart: string;
@@ -61,6 +62,7 @@ export function generateEndTimes(startTime: string): string[] {
 const SettingsSchema = Yup.object().shape({});
 
 const settingsFormValues: SettingsValues = {
+    businessName: "",
     availableDays: [
         { value: 0, label: "Sunday", checked: false },
         { value: 1, label: "Monday", checked: false },
@@ -77,6 +79,7 @@ const settingsFormValues: SettingsValues = {
 
 export default function Settings() {
     const [sectionInfoVisible, setSectionInfoVisible] = useState({
+        businessName: false,
         workingDays: false,
         deposit: false,
         regularHours: false,
@@ -99,6 +102,52 @@ export default function Settings() {
             }) => (
                 <ScrollView style={styles.container}>
                     <StatusBar />
+
+                    {/* ----------Business Name--------- */}
+
+                    <View style={styles.headerContainer}>
+                        <Text style={styles.header}>Business Name</Text>
+                        <TouchableOpacity
+                            onPress={() =>
+                                setSectionInfoVisible((pVal) => {
+                                    return {
+                                        ...pVal,
+                                        businessName: !pVal.businessName,
+                                    };
+                                })
+                            }
+                            hitSlop={checkboxHitSlop}
+                        >
+                            <Ionicons
+                                name="information-circle-sharp"
+                                style={styles.infoIcon}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <Text
+                        style={[
+                            sectionInfoVisible.businessName
+                                ? styles.sectionInfoOpen
+                                : styles.sectionInfo,
+                        ]}
+                    >
+                        The name of your business as it will appear to your
+                        clients.
+                    </Text>
+
+                    <TextInput
+                        onChangeText={handleChange("businessName")}
+                        autoCapitalize="words"
+                        value={values.businessName}
+                        style={styles.input}
+                    ></TextInput>
+
+                    {errors.businessName && (
+                        <Text style={styles.errors}>{errors.businessName}</Text>
+                    )}
+
+                    <Seperator />
+
                     {/* ----------Working Days Selector--------- */}
                     <View style={styles.headerContainer}>
                         <Text style={styles.header}>Available Days</Text>
@@ -316,6 +365,17 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         paddingVertical: 15,
         paddingLeft: "5%",
+    },
+    input: {
+        backgroundColor: "white",
+        borderWidth: 1,
+        borderColor: "black",
+        height: 40,
+        padding: 10,
+        borderRadius: 4,
+        marginVertical: 10,
+        marginRight: 85,
+        marginLeft: 20,
     },
     option: { marginLeft: "7%" },
     checkboxContainer: { alignItems: "center" },
