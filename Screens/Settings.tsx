@@ -6,19 +6,19 @@ import {
     Text,
     TouchableOpacity,
     View,
+    TextInput,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import SelectDropdown from "react-native-select-dropdown";
 import Checkbox from "expo-checkbox";
-import { TextInput } from "react-native-gesture-handler";
 import Seperator from "../Components/Seperator";
 import { Ionicons } from "@expo/vector-icons";
 import CustomButton from "../Components/CustomButton";
 
 type AvailableDay = { value: number; label: string; checked: boolean };
 
-type SettingsValues = { availableDays: AvailableDay[] };
+type SettingsValues = { availableDays: AvailableDay[]; deposit: string };
 
 const checkboxHitSlop = { bottom: 20, left: 20, right: 20, top: 20 };
 
@@ -34,11 +34,13 @@ const settingsFormValues: SettingsValues = {
         { value: 5, label: "Friday", checked: false },
         { value: 6, label: "Saturday", checked: false },
     ],
+    deposit: "0.00",
 };
 
 export default function Settings() {
     const [sectionInfoVisible, setSectionInfoVisible] = useState({
         workingDays: false,
+        deposit: false,
     });
 
     return (
@@ -121,6 +123,54 @@ export default function Settings() {
                     ) : null}
 
                     <Seperator />
+
+                    {/* ----------Deposit--------- */}
+
+                    <View style={styles.headerContainer}>
+                        <Text style={styles.header}>Deposit Amount</Text>
+                        <TouchableOpacity
+                            onPress={() =>
+                                setSectionInfoVisible((pVal) => {
+                                    return { ...pVal, deposit: !pVal.deposit };
+                                })
+                            }
+                            hitSlop={checkboxHitSlop}
+                        >
+                            <Ionicons
+                                name="information-circle-sharp"
+                                style={styles.infoIcon}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <Text
+                        style={[
+                            sectionInfoVisible.deposit
+                                ? styles.sectionInfoOpen
+                                : styles.sectionInfo,
+                        ]}
+                    >
+                        Enter the deposit amount (CAD) for a client to book an
+                        appointment.
+                    </Text>
+                    <View style={styles.optionRow}>
+                        <Text>$</Text>
+                        <TextInput
+                            keyboardType="numeric"
+                            returnKeyType="done"
+                            onChangeText={handleChange("deposit")}
+                            onBlur={handleBlur("deposit")}
+                            value={values.deposit}
+                            style={styles.depositInput}
+                            defaultValue={values.deposit}
+                        ></TextInput>
+
+                        {errors.deposit && touched.deposit ? (
+                            <Text style={styles.errors}>{errors.deposit}</Text>
+                        ) : null}
+                    </View>
+
+                    <Seperator />
+
                     {/* ----------Save Button ----------- */}
 
                     <View style={styles.buttonContainer}>
@@ -136,7 +186,7 @@ export default function Settings() {
     );
 }
 
-// days of the week check box -
+// days of the week check box - availability
 //  selectdropdown -
 // check box / switch selector -
 // text input -
@@ -169,4 +219,13 @@ const styles = StyleSheet.create({
     sectionInfo: { paddingHorizontal: "5%", marginBottom: 10, display: "none" },
     sectionInfoOpen: { paddingHorizontal: "5%", marginBottom: 10 },
     buttonContainer: { alignItems: "center", marginBottom: 30 },
+    depositInput: {
+        borderWidth: 1,
+        borderColor: "slategray",
+        borderRadius: 3,
+        width: 75,
+        height: 30,
+        textAlign: "center",
+    },
+    optionRow: { flexDirection: "row", marginLeft: "7%" },
 });
