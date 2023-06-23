@@ -24,6 +24,7 @@ type SettingsValues = {
     deposit: string;
     regularHoursStart: string;
     regularHoursEnd: string;
+    clientEmailNotifications: boolean;
 };
 
 const checkboxHitSlop = { bottom: 20, left: 20, right: 20, top: 20 };
@@ -75,6 +76,7 @@ const settingsFormValues: SettingsValues = {
     deposit: "0.00",
     regularHoursStart: "",
     regularHoursEnd: "",
+    clientEmailNotifications: false,
 };
 
 export default function Settings() {
@@ -83,6 +85,7 @@ export default function Settings() {
         workingDays: false,
         deposit: false,
         regularHours: false,
+        clientEmailNotifications: false,
     });
 
     return (
@@ -332,6 +335,58 @@ export default function Settings() {
 
                     <Seperator />
 
+                    {/* ----------Email Notification  ----------- */}
+
+                    <View style={styles.headerContainer}>
+                        <Text style={styles.header}>Email Notification</Text>
+                        <TouchableOpacity
+                            onPress={() =>
+                                setSectionInfoVisible((pVal) => {
+                                    return {
+                                        ...pVal,
+                                        clientEmailNotifications:
+                                            !pVal.clientEmailNotifications,
+                                    };
+                                })
+                            }
+                            hitSlop={checkboxHitSlop}
+                        >
+                            <Ionicons
+                                name="information-circle-sharp"
+                                style={styles.infoIcon}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <Text
+                        style={[
+                            sectionInfoVisible.clientEmailNotifications
+                                ? styles.sectionInfoOpen
+                                : styles.sectionInfo,
+                        ]}
+                    >
+                        If boxed is checked, clients will recieve an email
+                        notification.
+                    </Text>
+
+                    <View style={styles.emailNotifContainer}>
+                        <Checkbox
+                            value={values.clientEmailNotifications}
+                            onValueChange={(value) =>
+                                setFieldValue("clientEmailNotifications", value)
+                            }
+                            color={
+                                values.clientEmailNotifications
+                                    ? "#4630EB"
+                                    : undefined
+                            }
+                            hitSlop={checkboxHitSlop}
+                        />
+                        <Text style={styles.checkboxText}>
+                            Clients will recieve email notifcations.
+                        </Text>
+                    </View>
+                    <Seperator />
+
                     {/* ----------Save Button ----------- */}
 
                     <View style={styles.buttonContainer}>
@@ -412,4 +467,11 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         width: 120,
     },
+    emailNotifContainer: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        marginVertical: 15,
+    },
+    checkboxText: { paddingLeft: 10 },
 });
