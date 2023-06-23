@@ -18,9 +18,45 @@ import CustomButton from "../Components/CustomButton";
 
 type AvailableDay = { value: number; label: string; checked: boolean };
 
-type SettingsValues = { availableDays: AvailableDay[]; deposit: string };
+type SettingsValues = {
+    availableDays: AvailableDay[];
+    deposit: string;
+    regularHoursStart: string;
+    regularHoursEnd: string;
+};
 
 const checkboxHitSlop = { bottom: 20, left: 20, right: 20, top: 20 };
+
+export const fullDayTimes = [
+    "1:00",
+    "2:00",
+    "3:00",
+    "4:00",
+    "5:00",
+    "6:00",
+    "7:00",
+    "8:00",
+    "9:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+    "19:00",
+    "20:00",
+    "21:00",
+    "22:00",
+    "23:00",
+    "24:00",
+];
+
+export function generateEndTimes(startTime: string): string[] {
+    return fullDayTimes.slice(fullDayTimes.indexOf(startTime) + 1);
+}
 
 const SettingsSchema = Yup.object().shape({});
 
@@ -35,12 +71,15 @@ const settingsFormValues: SettingsValues = {
         { value: 6, label: "Saturday", checked: false },
     ],
     deposit: "0.00",
+    regularHoursStart: "",
+    regularHoursEnd: "",
 };
 
 export default function Settings() {
     const [sectionInfoVisible, setSectionInfoVisible] = useState({
         workingDays: false,
         deposit: false,
+        regularHours: false,
     });
 
     return (
@@ -171,6 +210,78 @@ export default function Settings() {
 
                     <Seperator />
 
+                    {/* ---------- Hours Selector--------- */}
+
+                    <View style={styles.headerContainer}>
+                        <Text style={styles.header}> Hours</Text>
+                        <TouchableOpacity
+                            onPress={() =>
+                                setSectionInfoVisible((pVal) => {
+                                    return {
+                                        ...pVal,
+                                        regularHours: !pVal.regularHours,
+                                    };
+                                })
+                            }
+                            hitSlop={checkboxHitSlop}
+                        >
+                            <Ionicons
+                                name="information-circle-sharp"
+                                style={styles.infoIcon}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <Text
+                        style={[
+                            sectionInfoVisible.regularHours
+                                ? styles.sectionInfoOpen
+                                : styles.sectionInfo,
+                        ]}
+                    >
+                        The start and end time of a regular work day.
+                    </Text>
+                    <View style={styles.selectContainer}>
+                        <Text style={styles.option}>Start Time</Text>
+                        <SelectDropdown
+                            data={fullDayTimes}
+                            renderDropdownIcon={() => <Text>▼</Text>}
+                            buttonStyle={styles.dropdownButtonStyle}
+                            onSelect={handleChange("regularHoursStart")}
+                            onBlur={() => handleBlur("regularHoursStart")}
+                            defaultButtonText={"Set"}
+                            defaultValue={values.regularHoursStart}
+                        />
+                    </View>
+                    {errors.regularHoursStart && touched.regularHoursStart ? (
+                        <Text style={styles.errors}>
+                            {errors.regularHoursStart}
+                        </Text>
+                    ) : null}
+
+                    {values.regularHoursStart && (
+                        <View style={styles.selectContainer}>
+                            <Text style={styles.option}>End Time</Text>
+                            <SelectDropdown
+                                data={generateEndTimes(
+                                    values.regularHoursStart
+                                )}
+                                renderDropdownIcon={() => <Text>▼</Text>}
+                                buttonStyle={styles.dropdownButtonStyle}
+                                onSelect={handleChange("regularHoursEnd")}
+                                onBlur={() => handleBlur("regularHoursEnd")}
+                                defaultButtonText={"Set"}
+                                defaultValue={values.regularHoursEnd}
+                            />
+                        </View>
+                    )}
+                    {errors.regularHoursEnd && touched.regularHoursEnd ? (
+                        <Text style={styles.errors}>
+                            {errors.regularHoursEnd}
+                        </Text>
+                    ) : null}
+
+                    <Seperator />
+
                     {/* ----------Save Button ----------- */}
 
                     <View style={styles.buttonContainer}>
@@ -205,6 +316,7 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         paddingLeft: "5%",
     },
+    option: { marginLeft: "7%" },
     checkboxContainer: { alignItems: "center" },
     checkbox: {
         margin: "10%",
@@ -228,4 +340,15 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     optionRow: { flexDirection: "row", marginLeft: "7%" },
+    selectContainer: {
+        flexDirection: "row",
+        paddingVertical: 5,
+        alignItems: "center",
+    },
+    dropdownButtonStyle: {
+        borderRadius: 6,
+        height: 30,
+        marginHorizontal: 20,
+        width: 120,
+    },
 });
