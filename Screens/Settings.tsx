@@ -238,7 +238,8 @@ export default function Settings() {
                                 : styles.sectionInfo,
                         ]}
                     >
-                        The start and end time of a regular work day.
+                        The start and end time of a regular work day according
+                        to 24 hour clock.
                     </Text>
                     <View style={styles.selectContainer}>
                         <Text style={styles.option}>Start Time</Text>
