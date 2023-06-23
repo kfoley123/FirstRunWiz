@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import SelectDropdown from "react-native-select-dropdown";
@@ -8,6 +14,7 @@ import Checkbox from "expo-checkbox";
 import { TextInput } from "react-native-gesture-handler";
 import Seperator from "../Components/Seperator";
 import { Ionicons } from "@expo/vector-icons";
+import CustomButton from "../Components/CustomButton";
 
 type AvailableDay = { value: number; label: string; checked: boolean };
 
@@ -49,7 +56,7 @@ export default function Settings() {
                 errors,
                 touched,
             }) => (
-                <View style={styles.container}>
+                <ScrollView style={styles.container}>
                     <StatusBar />
                     {/* ----------Working Days Selector--------- */}
                     <View style={styles.headerContainer}>
@@ -114,7 +121,16 @@ export default function Settings() {
                     ) : null}
 
                     <Seperator />
-                </View>
+                    {/* ----------Save Button ----------- */}
+
+                    <View style={styles.buttonContainer}>
+                        <CustomButton
+                            title={"Save"}
+                            buttonWidth={75}
+                            buttonOnPress={handleSubmit}
+                        />
+                    </View>
+                </ScrollView>
             )}
         </Formik>
     );
@@ -152,4 +168,5 @@ const styles = StyleSheet.create({
     infoIcon: { fontSize: 20, color: "black", marginLeft: 5 },
     sectionInfo: { paddingHorizontal: "5%", marginBottom: 10, display: "none" },
     sectionInfoOpen: { paddingHorizontal: "5%", marginBottom: 10 },
+    buttonContainer: { alignItems: "center", marginBottom: 30 },
 });
