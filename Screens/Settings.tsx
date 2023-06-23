@@ -1,8 +1,9 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import SelectDropdown from "react-native-select-dropdown";
 
 type SettingsValues = {};
 
@@ -29,6 +30,7 @@ export default function Settings() {
                 <View style={styles.container}>
                     <StatusBar />
                     <Text> Settings</Text>
+                    <TextInput></TextInput>
                 </View>
             )}
         </Formik>
