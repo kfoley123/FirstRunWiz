@@ -15,6 +15,12 @@ import Checkbox from "expo-checkbox";
 import Seperator from "../Components/Seperator";
 import { Ionicons } from "@expo/vector-icons";
 import CustomButton from "../Components/CustomButton";
+import SwitchSelector from "react-native-switch-selector";
+import {
+    checkboxHitSlop,
+    fullDayTimes,
+    generateEndTimes,
+} from "../Helpers/helpers";
 
 type AvailableDay = { value: number; label: string; checked: boolean };
 
@@ -25,40 +31,8 @@ type SettingsValues = {
     regularHoursStart: string;
     regularHoursEnd: string;
     clientEmailNotifications: boolean;
+    clientSMSNotifications: boolean;
 };
-
-const checkboxHitSlop = { bottom: 20, left: 20, right: 20, top: 20 };
-
-export const fullDayTimes = [
-    "1:00",
-    "2:00",
-    "3:00",
-    "4:00",
-    "5:00",
-    "6:00",
-    "7:00",
-    "8:00",
-    "9:00",
-    "10:00",
-    "11:00",
-    "12:00",
-    "13:00",
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-    "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-    "22:00",
-    "23:00",
-    "24:00",
-];
-
-export function generateEndTimes(startTime: string): string[] {
-    return fullDayTimes.slice(fullDayTimes.indexOf(startTime) + 1);
-}
 
 const SettingsSchema = Yup.object().shape({});
 
@@ -77,6 +51,7 @@ const settingsFormValues: SettingsValues = {
     regularHoursStart: "",
     regularHoursEnd: "",
     clientEmailNotifications: false,
+    clientSMSNotifications: false,
 };
 
 export default function Settings() {
@@ -85,7 +60,7 @@ export default function Settings() {
         workingDays: false,
         deposit: false,
         regularHours: false,
-        clientEmailNotifications: false,
+        clientNotifications: false,
     });
 
     return (
@@ -337,15 +312,33 @@ export default function Settings() {
 
                     {/* ----------Email Notification  ----------- */}
 
+                    <View style={styles.switchContainer}>
+                        <SwitchSelector
+                            options={[
+                                { label: "None", value: true },
+                                { label: "Set", value: false },
+                            ]}
+                            initial={
+                                values.clientEmailNotifications &&
+                                values.clientSMSNotifications
+                                    ? 1
+                                    : 0
+                            }
+                            hitSlop={checkboxHitSlop}
+                            buttonColor={"midnightblue"}
+                            onPress={(value: any) => console.log(value)}
+                        />
+                    </View>
+
                     <View style={styles.headerContainer}>
-                        <Text style={styles.header}>Email Notification</Text>
+                        <Text style={styles.header}>Client Notifications</Text>
                         <TouchableOpacity
                             onPress={() =>
                                 setSectionInfoVisible((pVal) => {
                                     return {
                                         ...pVal,
-                                        clientEmailNotifications:
-                                            !pVal.clientEmailNotifications,
+                                        clientNotifications:
+                                            !pVal.clientNotifications,
                                     };
                                 })
                             }
@@ -359,16 +352,16 @@ export default function Settings() {
                     </View>
                     <Text
                         style={[
-                            sectionInfoVisible.clientEmailNotifications
+                            sectionInfoVisible.clientNotifications
                                 ? styles.sectionInfoOpen
                                 : styles.sectionInfo,
                         ]}
                     >
-                        If boxed is checked, clients will recieve an email
-                        notification.
+                        Check boxes to generate client SMS and/or Email
+                        notifcations.
                     </Text>
 
-                    <View style={styles.emailNotifContainer}>
+                    <View style={styles.notificationsContainer}>
                         <Checkbox
                             value={values.clientEmailNotifications}
                             onValueChange={(value) =>
@@ -383,6 +376,24 @@ export default function Settings() {
                         />
                         <Text style={styles.checkboxText}>
                             Clients will recieve email notifcations.
+                        </Text>
+                    </View>
+
+                    <View style={styles.notificationsContainer}>
+                        <Checkbox
+                            value={values.clientSMSNotifications}
+                            onValueChange={(value) =>
+                                setFieldValue("clientSMSNotifications", value)
+                            }
+                            color={
+                                values.clientSMSNotifications
+                                    ? "#4630EB"
+                                    : undefined
+                            }
+                            hitSlop={checkboxHitSlop}
+                        />
+                        <Text style={styles.checkboxText}>
+                            Clients will recieve SMS notifcations.
                         </Text>
                     </View>
                     <Seperator />
@@ -467,11 +478,12 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         width: 120,
     },
-    emailNotifContainer: {
+    notificationsContainer: {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
         marginVertical: 15,
     },
     checkboxText: { paddingLeft: 10 },
+    switchContainer: { alignItems: "center", padding: 25 },
 });
