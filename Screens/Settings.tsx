@@ -308,7 +308,7 @@ export default function Settings() {
                     <View style={styles.selectContainer}>
                         <Text style={styles.option}>Start Time</Text>
                         <SelectDropdown
-                            data={fullDayTimes}
+                            data={fullDayTimes()}
                             renderDropdownIcon={() => <Text>▼</Text>}
                             buttonStyle={styles.dropdownButtonStyle}
                             onSelect={handleChange("regularHoursStart")}
