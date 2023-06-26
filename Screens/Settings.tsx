@@ -34,7 +34,40 @@ type SettingsValues = {
     clientSMSNotifications: boolean;
 };
 
-const SettingsSchema = Yup.object().shape({});
+const SettingsSchema = Yup.object().shape({
+    businessName: Yup.string().required("Business Name is required"),
+    availableDays: Yup.array()
+        .of(
+            Yup.object().shape({
+                value: Yup.number(),
+                label: Yup.string(),
+                checked: Yup.boolean(),
+            })
+        )
+        .compact((v) => !v.checked)
+        .min(1, "You must check at least one day"),
+    deposit: Yup.string().matches(/^\d+(?:\.\d{1,2})?$/, "Invalid amount"),
+    regularHoursStart: Yup.string().required(
+        "Regular hours start time is required"
+    ),
+    regularHoursEnd: Yup.string()
+        .required("Regular hours end time is required")
+        .test(
+            "isValidTime",
+            "End time must be later than start time",
+            function (value) {
+                const { regularHoursStart } = this.parent;
+                if (!regularHoursStart && !value) {
+                    return true;
+                }
+                if (regularHoursStart && value) {
+                    const startTime = Number(regularHoursStart.split(":", 1));
+                    const endTime = Number(value.split(":", 1));
+                    return endTime > startTime;
+                }
+            }
+        ),
+});
 
 const settingsFormValues: SettingsValues = {
     businessName: "",
