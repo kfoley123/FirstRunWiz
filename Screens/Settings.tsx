@@ -85,7 +85,7 @@ export default function Settings() {
                 <ScrollView style={styles.container}>
                     <StatusBar />
 
-                    {/* ----------Business Name--------- */}
+                    {/* ------------------------------Business Name----------------------------- */}
 
                     <View style={styles.headerContainer}>
                         <Text style={styles.header}>Business Name</Text>
@@ -130,7 +130,7 @@ export default function Settings() {
 
                     <Seperator />
 
-                    {/* ----------Working Days Selector--------- */}
+                    {/* ------------------------------Working Days Selector----------------------------- */}
                     <View style={styles.headerContainer}>
                         <Text style={styles.header}>Available Days</Text>
                         <TouchableOpacity
@@ -194,7 +194,7 @@ export default function Settings() {
 
                     <Seperator />
 
-                    {/* ----------Deposit--------- */}
+                    {/* ------------------------------Deposit----------------------------- */}
 
                     <View style={styles.headerContainer}>
                         <Text style={styles.header}>Deposit Amount</Text>
@@ -241,7 +241,7 @@ export default function Settings() {
 
                     <Seperator />
 
-                    {/* ---------- Hours Selector--------- */}
+                    {/* ------------------------------ Hours Selector----------------------------- */}
 
                     <View style={styles.headerContainer}>
                         <Text style={styles.header}> Hours</Text>
@@ -314,7 +314,7 @@ export default function Settings() {
 
                     <Seperator />
 
-                    {/* ----------Email Notification  ----------- */}
+                    {/* ------------------------------Email Notification  ------------------------------- */}
                     <View style={styles.headerContainer}>
                         <Text style={styles.header}>Client Notifications</Text>
                         <TouchableOpacity
@@ -420,7 +420,7 @@ export default function Settings() {
 
                     <Seperator />
 
-                    {/* ----------Save Button ----------- */}
+                    {/* ------------------------------Save Button ------------------------------- */}
 
                     <View style={styles.buttonContainer}>
                         <CustomButton
@@ -434,13 +434,6 @@ export default function Settings() {
         </Formik>
     );
 }
-
-// days of the week check box - availability
-//  selectdropdown -
-// check box / switch selector -
-// text input -
-// number input -
-//
 
 const styles = StyleSheet.create({
     container: {
