@@ -336,6 +336,17 @@ export default function Settings() {
                         </TouchableOpacity>
                     </View>
 
+                    <Text
+                        style={[
+                            sectionInfoVisible.clientNotifications
+                                ? styles.sectionInfoOpen
+                                : styles.sectionInfo,
+                        ]}
+                    >
+                        Check boxes to generate client SMS and/or Email
+                        notifcations.
+                    </Text>
+
                     <View style={styles.switchContainer}>
                         <SwitchSelector
                             options={[
@@ -360,17 +371,6 @@ export default function Settings() {
                             }}
                         />
                     </View>
-
-                    <Text
-                        style={[
-                            sectionInfoVisible.clientNotifications
-                                ? styles.sectionInfoOpen
-                                : styles.sectionInfo,
-                        ]}
-                    >
-                        Check boxes to generate client SMS and/or Email
-                        notifcations.
-                    </Text>
 
                     {!noNotificationsChecked && (
                         <>
