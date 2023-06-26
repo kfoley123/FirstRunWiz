@@ -29,7 +29,7 @@ export default function Profile() {
     const initalFormValues: ProfileFormValues = {
         name: "Cammy White",
         email: "123@CammyWhite.com",
-        phone: "555-555-555",
+        phone: "555555555",
     };
 
     const ProfileSchema = Yup.object().shape({
@@ -42,12 +42,11 @@ export default function Profile() {
                 /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
                 "Invalid email address"
             )
+            //built in Yup email validation allows errors so had to use a different regex
             .max(256, "Must be less than 256 characters")
             .required("email is required"),
         phone: Yup.string()
-            .matches(/^[0-9]*$/, "Invalid phone number")
-            .min(10, "Must be 10 digits")
-            .max(10, "Must be 10 digits")
+            .matches(/^[0-9]{10}$/, "Invalid phone number")
             .required("Phone number is required"),
     });
 
