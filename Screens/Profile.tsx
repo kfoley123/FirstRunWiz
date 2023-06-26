@@ -70,9 +70,7 @@ export default function Profile() {
                     <StatusBar />
                     <ImageBackground
                         style={styles.hero}
-                        source={{
-                            uri: "https://media.istockphoto.com/id/1420755455/photo/grunge-dirty-background-overlay.jpg?b=1&s=170667a&w=0&k=20&c=7wfOkV1I0RJVAsuZlCzMD8zRenjlWo1hUYCAIsGBckw=",
-                        }}
+                        source={require("./Images/blackBackground.jpeg")}
                     >
                         <Image
                             source={require("./Images/profile-placeholder.png")}
@@ -128,9 +126,7 @@ export default function Profile() {
                                     <ImageBackground
                                         resizeMode={"cover"}
                                         style={styles.hero}
-                                        source={{
-                                            uri: "https://media.istockphoto.com/id/1420755455/photo/grunge-dirty-background-overlay.jpg?b=1&s=170667a&w=0&k=20&c=7wfOkV1I0RJVAsuZlCzMD8zRenjlWo1hUYCAIsGBckw=",
-                                        }}
+                                        source={require("./Images/blackBackground.jpeg")}
                                     >
                                         <Image
                                             source={require("./Images/profile-placeholder.png")}
