@@ -63,6 +63,10 @@ export default function Settings() {
         clientNotifications: false,
     });
 
+    const [noNotificationsChecked, setNoNotificationsChecked] = useState(true);
+
+    //TODO: update this to use the form values from db when those are availble rather than being hard coded
+
     return (
         <Formik
             initialValues={settingsFormValues}
@@ -311,25 +315,6 @@ export default function Settings() {
                     <Seperator />
 
                     {/* ----------Email Notification  ----------- */}
-
-                    <View style={styles.switchContainer}>
-                        <SwitchSelector
-                            options={[
-                                { label: "None", value: true },
-                                { label: "Set", value: false },
-                            ]}
-                            initial={
-                                values.clientEmailNotifications &&
-                                values.clientSMSNotifications
-                                    ? 1
-                                    : 0
-                            }
-                            hitSlop={checkboxHitSlop}
-                            buttonColor={"midnightblue"}
-                            onPress={(value: any) => console.log(value)}
-                        />
-                    </View>
-
                     <View style={styles.headerContainer}>
                         <Text style={styles.header}>Client Notifications</Text>
                         <TouchableOpacity
@@ -350,6 +335,32 @@ export default function Settings() {
                             />
                         </TouchableOpacity>
                     </View>
+
+                    <View style={styles.switchContainer}>
+                        <SwitchSelector
+                            options={[
+                                { label: "None", value: true },
+                                { label: "Set", value: false },
+                            ]}
+                            initial={
+                                values.clientEmailNotifications &&
+                                values.clientSMSNotifications
+                                    ? 1
+                                    : 0
+                            }
+                            hitSlop={checkboxHitSlop}
+                            buttonColor={"midnightblue"}
+                            onPress={(value: any) => {
+                                setNoNotificationsChecked(value);
+                                setFieldValue(
+                                    "clientEmailNotifications",
+                                    !value
+                                );
+                                setFieldValue("clientSMSNotifications", !value);
+                            }}
+                        />
+                    </View>
+
                     <Text
                         style={[
                             sectionInfoVisible.clientNotifications
@@ -361,41 +372,52 @@ export default function Settings() {
                         notifcations.
                     </Text>
 
-                    <View style={styles.notificationsContainer}>
-                        <Checkbox
-                            value={values.clientEmailNotifications}
-                            onValueChange={(value) =>
-                                setFieldValue("clientEmailNotifications", value)
-                            }
-                            color={
-                                values.clientEmailNotifications
-                                    ? "#4630EB"
-                                    : undefined
-                            }
-                            hitSlop={checkboxHitSlop}
-                        />
-                        <Text style={styles.checkboxText}>
-                            Clients will recieve email notifcations.
-                        </Text>
-                    </View>
+                    {!noNotificationsChecked && (
+                        <>
+                            <View style={styles.notificationsContainer}>
+                                <Checkbox
+                                    value={values.clientEmailNotifications}
+                                    onValueChange={(value) =>
+                                        setFieldValue(
+                                            "clientEmailNotifications",
+                                            value
+                                        )
+                                    }
+                                    color={
+                                        values.clientEmailNotifications
+                                            ? "#4630EB"
+                                            : undefined
+                                    }
+                                    hitSlop={checkboxHitSlop}
+                                />
+                                <Text style={styles.checkboxText}>
+                                    Clients will recieve email notifcations.
+                                </Text>
+                            </View>
 
-                    <View style={styles.notificationsContainer}>
-                        <Checkbox
-                            value={values.clientSMSNotifications}
-                            onValueChange={(value) =>
-                                setFieldValue("clientSMSNotifications", value)
-                            }
-                            color={
-                                values.clientSMSNotifications
-                                    ? "#4630EB"
-                                    : undefined
-                            }
-                            hitSlop={checkboxHitSlop}
-                        />
-                        <Text style={styles.checkboxText}>
-                            Clients will recieve SMS notifcations.
-                        </Text>
-                    </View>
+                            <View style={styles.notificationsContainer}>
+                                <Checkbox
+                                    value={values.clientSMSNotifications}
+                                    onValueChange={(value) =>
+                                        setFieldValue(
+                                            "clientSMSNotifications",
+                                            value
+                                        )
+                                    }
+                                    color={
+                                        values.clientSMSNotifications
+                                            ? "#4630EB"
+                                            : undefined
+                                    }
+                                    hitSlop={checkboxHitSlop}
+                                />
+                                <Text style={styles.checkboxText}>
+                                    Clients will recieve SMS notifcations.
+                                </Text>
+                            </View>
+                        </>
+                    )}
+
                     <Seperator />
 
                     {/* ----------Save Button ----------- */}
