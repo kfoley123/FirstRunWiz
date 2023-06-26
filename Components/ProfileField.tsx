@@ -14,15 +14,21 @@ export default function ProfileField({
     value,
 }: ProfileFieldProps) {
     const getIcon = (icon: string) => {
-        if (icon === "phone") {
-            return (
-                <MaterialIcons name="local-phone" style={styles.modalIcon} />
-            );
-        } else if (icon === "email") {
-            return <MaterialIcons name="email" style={styles.modalIcon} />;
-        } else if (icon === "name") {
-            return <MaterialIcons name="person" style={styles.modalIcon} />;
-        } else return <></>;
+        switch (icon) {
+            case "phone":
+                return (
+                    <MaterialIcons
+                        name="local-phone"
+                        style={styles.modalIcon}
+                    />
+                );
+            case "email":
+                return <MaterialIcons name="email" style={styles.modalIcon} />;
+            case "name":
+                return <MaterialIcons name="person" style={styles.modalIcon} />;
+            default:
+                return <></>;
+        }
     };
 
     return (

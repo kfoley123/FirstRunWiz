@@ -16,6 +16,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import CustomButton from "../Components/CustomButton";
+import Errors from "../Components/Errors";
 
 type ProfileFormValues = {
     name: string;
@@ -29,7 +30,7 @@ export default function Profile() {
     const initalFormValues: ProfileFormValues = {
         name: "Cammy White",
         email: "123@CammyWhite.com",
-        phone: "555-555-555",
+        phone: "5555555555",
     };
 
     const ProfileSchema = Yup.object().shape({
@@ -42,12 +43,11 @@ export default function Profile() {
                 /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
                 "Invalid email address"
             )
+            //built in Yup email validation allows errors so had to use a different regex
             .max(256, "Must be less than 256 characters")
             .required("email is required"),
         phone: Yup.string()
-            .matches(/^[0-9]*$/, "Invalid phone number")
-            .min(10, "Must be 10 digits")
-            .max(10, "Must be 10 digits")
+            .matches(/^[0-9]{10}$/, "Invalid phone number")
             .required("Phone number is required"),
     });
 
@@ -62,6 +62,7 @@ export default function Profile() {
                 handleBlur,
                 handleSubmit,
                 setFieldValue,
+                resetForm,
                 values,
                 errors,
             }) => (
@@ -69,9 +70,7 @@ export default function Profile() {
                     <StatusBar />
                     <ImageBackground
                         style={styles.hero}
-                        source={{
-                            uri: "https://media.istockphoto.com/id/1420755455/photo/grunge-dirty-background-overlay.jpg?b=1&s=170667a&w=0&k=20&c=7wfOkV1I0RJVAsuZlCzMD8zRenjlWo1hUYCAIsGBckw=",
-                        }}
+                        source={require("./Images/blackBackground.jpeg")}
                     >
                         <Image
                             source={require("./Images/profile-placeholder.png")}
@@ -91,7 +90,7 @@ export default function Profile() {
 
                     <ProfileField
                         label={"Name "}
-                        value={values.name}
+                        value={initalFormValues.name}
                         icon="name"
                     />
 
@@ -99,14 +98,14 @@ export default function Profile() {
 
                     <ProfileField
                         label={"Email"}
-                        value={values.email}
+                        value={initalFormValues.email}
                         icon="email"
                     />
                     <Seperator />
 
                     <ProfileField
                         label={"Phone"}
-                        value={values.phone}
+                        value={initalFormValues.phone}
                         icon="phone"
                     />
 
@@ -127,9 +126,7 @@ export default function Profile() {
                                     <ImageBackground
                                         resizeMode={"cover"}
                                         style={styles.hero}
-                                        source={{
-                                            uri: "https://media.istockphoto.com/id/1420755455/photo/grunge-dirty-background-overlay.jpg?b=1&s=170667a&w=0&k=20&c=7wfOkV1I0RJVAsuZlCzMD8zRenjlWo1hUYCAIsGBckw=",
-                                        }}
+                                        source={require("./Images/blackBackground.jpeg")}
                                     >
                                         <Image
                                             source={require("./Images/profile-placeholder.png")}
@@ -160,11 +157,7 @@ export default function Profile() {
                                     value={values.name}
                                 />
 
-                                {errors.name ? (
-                                    <Text style={styles.errors}>
-                                        {errors.name}
-                                    </Text>
-                                ) : null}
+                                <Errors errorMessage={errors.name} />
 
                                 <Text style={styles.label}> Email</Text>
 
@@ -176,11 +169,7 @@ export default function Profile() {
                                     value={values.email}
                                 />
 
-                                {errors.email ? (
-                                    <Text style={styles.errors}>
-                                        {errors.email}
-                                    </Text>
-                                ) : null}
+                                <Errors errorMessage={errors.email} />
 
                                 <Text style={styles.label}> Phone</Text>
 
@@ -192,11 +181,7 @@ export default function Profile() {
                                     value={values.phone}
                                 />
 
-                                {errors.phone ? (
-                                    <Text style={styles.errors}>
-                                        {errors.phone}
-                                    </Text>
-                                ) : null}
+                                <Errors errorMessage={errors.phone} />
 
                                 <View style={styles.buttons}>
                                     <CustomButton
@@ -204,6 +189,7 @@ export default function Profile() {
                                         buttonWidth={75}
                                         buttonOnPress={() => {
                                             setModalVisible(!modalVisible);
+                                            resetForm();
                                         }}
                                     />
 
