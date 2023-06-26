@@ -16,6 +16,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import CustomButton from "../Components/CustomButton";
+import Errors from "../Components/Errors";
 
 type ProfileFormValues = {
     name: string;
@@ -61,6 +62,7 @@ export default function Profile() {
                 handleBlur,
                 handleSubmit,
                 setFieldValue,
+                resetForm,
                 values,
                 errors,
             }) => (
@@ -90,7 +92,7 @@ export default function Profile() {
 
                     <ProfileField
                         label={"Name "}
-                        value={values.name}
+                        value={initalFormValues.name}
                         icon="name"
                     />
 
@@ -98,14 +100,14 @@ export default function Profile() {
 
                     <ProfileField
                         label={"Email"}
-                        value={values.email}
+                        value={initalFormValues.email}
                         icon="email"
                     />
                     <Seperator />
 
                     <ProfileField
                         label={"Phone"}
-                        value={values.phone}
+                        value={initalFormValues.phone}
                         icon="phone"
                     />
 
@@ -159,11 +161,7 @@ export default function Profile() {
                                     value={values.name}
                                 />
 
-                                {errors.name ? (
-                                    <Text style={styles.errors}>
-                                        {errors.name}
-                                    </Text>
-                                ) : null}
+                                <Errors errorMessage={errors.name} />
 
                                 <Text style={styles.label}> Email</Text>
 
@@ -175,11 +173,7 @@ export default function Profile() {
                                     value={values.email}
                                 />
 
-                                {errors.email ? (
-                                    <Text style={styles.errors}>
-                                        {errors.email}
-                                    </Text>
-                                ) : null}
+                                <Errors errorMessage={errors.email} />
 
                                 <Text style={styles.label}> Phone</Text>
 
@@ -191,11 +185,7 @@ export default function Profile() {
                                     value={values.phone}
                                 />
 
-                                {errors.phone ? (
-                                    <Text style={styles.errors}>
-                                        {errors.phone}
-                                    </Text>
-                                ) : null}
+                                <Errors errorMessage={errors.phone} />
 
                                 <View style={styles.buttons}>
                                     <CustomButton
@@ -203,6 +193,7 @@ export default function Profile() {
                                         buttonWidth={75}
                                         buttonOnPress={() => {
                                             setModalVisible(!modalVisible);
+                                            resetForm();
                                         }}
                                     />
 
