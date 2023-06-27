@@ -19,13 +19,11 @@ export default function Login() {
                 style={styles.Img}
             />
 
-            <TextInput style={styles.input}></TextInput>
+            <TextInput style={styles.input} placeholder="Email"></TextInput>
 
-            <TextInput style={styles.input}></TextInput>
+            <TextInput style={styles.input} placeholder="Password"></TextInput>
 
-            <TouchableOpacity
-                style={{ ...styles.input, backgroundColor: "darkblue" }}
-            >
+            <TouchableOpacity style={styles.signInButton}>
                 <Text style={styles.signInText}>Sign In</Text>
             </TouchableOpacity>
 
@@ -44,16 +42,16 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#fff",
     },
-    Img: { height: 200, width: "100%" },
+    Img: { height: "30%", width: "100%", marginBottom: "10%" },
     input: {
         backgroundColor: "white",
         borderWidth: 1,
         borderColor: "black",
         height: 40,
-        padding: 10,
+        paddingHorizontal: 15,
         borderRadius: 20,
-        marginVertical: 5,
-        marginHorizontal: 40,
+        marginVertical: "3%",
+        marginHorizontal: "10%",
         shadowColor: "black",
         shadowOpacity: 0.3,
         shadowOffset: {
@@ -61,7 +59,25 @@ const styles = StyleSheet.create({
             height: 2,
         },
     },
-    noAccountTextContainer: { flexDirection: "row", justifyContent: "center" },
+    signInButton: {
+        justifyContent: "center",
+        backgroundColor: "darkblue",
+        height: 40,
+        borderRadius: 20,
+        marginVertical: "3%",
+        marginHorizontal: "10%",
+        shadowColor: "black",
+        shadowOpacity: 0.3,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+    },
+    noAccountTextContainer: {
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: "30%",
+    },
     signUpText: { fontWeight: "bold", color: "darkblue" },
     signInText: { fontWeight: "bold", color: "white", textAlign: "center" },
 });
