@@ -8,32 +8,93 @@ import {
     View,
     Image,
 } from "react-native";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import Errors from "../Components/Errors";
+
+type LoginFormValues = { email: string; password: string };
+
+const initalFormValues: LoginFormValues = {
+    email: "",
+    password: "",
+};
+
+const LoginSchema = Yup.object().shape({
+    email: Yup.string()
+        .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, "Invalid email address")
+        //built in Yup email validation allows errors so had to use a different regex
+        .max(256, "Must be less than 256 characters")
+        .required("email is required"),
+    password: Yup.string().required("Password is required"),
+});
 
 export default function Login() {
     return (
-        <View style={styles.container}>
-            <StatusBar />
+        <Formik
+            initialValues={initalFormValues}
+            validationSchema={LoginSchema}
+            onSubmit={(values) => console.log(values)}
+        >
+            {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                setFieldValue,
+                resetForm,
+                values,
+                errors,
+            }) => (
+                <View style={styles.container}>
+                    <StatusBar />
 
-            <Image
-                source={require("./Images/blueBackground.png")}
-                style={styles.Img}
-            />
+                    <Image
+                        source={require("./Images/blueBackground.png")}
+                        style={styles.Img}
+                    />
 
-            <TextInput style={styles.input} placeholder="Email"></TextInput>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Email"
+                        onChangeText={handleChange("email")}
+                        value={values.email}
+                    ></TextInput>
 
-            <TextInput style={styles.input} placeholder="Password"></TextInput>
+                    <Errors errorMessage={errors.email} />
 
-            <TouchableOpacity style={styles.signInButton}>
-                <Text style={styles.signInText}>Sign In</Text>
-            </TouchableOpacity>
+                    <TextInput
+                        style={styles.input}
+                        //TODO: add this when app is live, leaving it out for ease of use during building/testing
+                        // secureTextEntry={true}
+                        placeholder="Password"
+                        onChangeText={handleChange("password")}
+                        value={values.password}
+                    ></TextInput>
 
-            <View style={styles.noAccountTextContainer}>
-                <Text> Don't have an account? </Text>
-                <TouchableOpacity>
-                    <Text style={styles.signUpText}>Sign Up</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+                    <Errors errorMessage={errors.password} />
+
+                    <TouchableOpacity
+                        disabled={Object.keys(errors).length > 0}
+                        style={styles.signInButton}
+                        onPress={() => {
+                            handleSubmit();
+                        }}
+                    >
+                        <Text style={styles.signInText}>Sign In</Text>
+                    </TouchableOpacity>
+
+                    <View style={styles.noAccountTextContainer}>
+                        <Text> Don't have an account? </Text>
+                        <TouchableOpacity
+                            onPress={() => {
+                                console.log("sign up");
+                            }}
+                        >
+                            <Text style={styles.signUpText}>Sign Up</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )}
+        </Formik>
     );
 }
 
