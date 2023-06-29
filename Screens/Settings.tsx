@@ -21,6 +21,7 @@ import {
     fullDayTimes,
     generateEndTimes,
 } from "../Helpers/helpers";
+import { SettingsFormValues } from "../customTypes";
 
 const SettingsSchema = Yup.object().shape({
     businessName: Yup.string().required("Business Name is required"),
@@ -57,7 +58,7 @@ const SettingsSchema = Yup.object().shape({
         ),
 });
 
-const settingsFormValues: SettingsValues = {
+const settingsFormValues: SettingsFormValues = {
     businessName: "",
     availableDays: [
         { value: 0, label: "Sunday", checked: false },

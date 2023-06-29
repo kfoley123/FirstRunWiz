@@ -17,12 +17,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import CustomButton from "../Components/CustomButton";
 import Errors from "../Components/Errors";
-
-type ProfileFormValues = {
-    name: string;
-    email: string;
-    phone: string;
-};
+import { ProfileFormValues } from "../customTypes";
 
 export default function Profile() {
     const [modalVisible, setModalVisible] = useState(false);

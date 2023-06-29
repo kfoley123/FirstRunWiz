@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import Wizard, { WizardRef } from "react-native-wizard";
 import Step1 from "../Components/FirstRunWizSteps/Step1";
 import Step2 from "../Components/FirstRunWizSteps/Step2";
-import { SettingsValues } from "../customTypes";
+import { FirstRunValues, SettingsFormValues } from "../customTypes";
 
 type FirstRunProps = { navigation: any; route: any };
 
@@ -18,25 +18,45 @@ export default function FirstRunWizard(props: FirstRunProps) {
 
     const stepList = [{ content: <Step1 /> }, { content: <Step2 /> }];
 
-    const initalFormValues: SettingsValues = {
-        businessName: "",
-        availableDays: [
-            { value: 0, label: "Sunday", checked: false },
-            { value: 1, label: "Monday", checked: false },
-            { value: 2, label: "Tuesday", checked: false },
-            { value: 3, label: "Wednesday", checked: false },
-            { value: 4, label: "Thursday", checked: false },
-            { value: 5, label: "Friday", checked: false },
-            { value: 6, label: "Saturday", checked: false },
-        ],
-        deposit: "0.00",
-        regularHoursStart: "",
-        regularHoursEnd: "",
-        clientEmailNotifications: false,
-        clientSMSNotifications: false,
+    const initalFormValues: FirstRunValues = {
+        ProfileValues: { email: "", phone: "", name: "" },
+        SettingsValues: {
+            businessName: "",
+            availableDays: [
+                { value: 0, label: "Sunday", checked: false },
+                { value: 1, label: "Monday", checked: false },
+                { value: 2, label: "Tuesday", checked: false },
+                { value: 3, label: "Wednesday", checked: false },
+                { value: 4, label: "Thursday", checked: false },
+                { value: 5, label: "Friday", checked: false },
+                { value: 6, label: "Saturday", checked: false },
+            ],
+            deposit: "0.00",
+            regularHoursStart: "",
+            regularHoursEnd: "",
+            clientEmailNotifications: false,
+            clientSMSNotifications: false,
+        },
+        password: "",
+        confirmPassword: "",
     };
 
     const FirstRunSchema = Yup.object().shape({
+        name: Yup.string()
+            .min(4, "Must be at least 4 characters")
+            .max(50, "Must be less than 50 characters")
+            .required("name is required"),
+        email: Yup.string()
+            .matches(
+                /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                "Invalid email address"
+            )
+            //built in Yup email validation allows errors so had to use a different regex
+            .max(256, "Must be less than 256 characters")
+            .required("email is required"),
+        phone: Yup.string()
+            .matches(/^[0-9]{10}$/, "Invalid phone number")
+            .required("Phone number is required"),
         businessName: Yup.string().required("Business Name is required"),
         availableDays: Yup.array()
             .of(
