@@ -28,7 +28,7 @@ const LoginSchema = Yup.object().shape({
     password: Yup.string().required("Password is required"),
 });
 
-export default function Login() {
+export default function Login({ navigation }) {
     return (
         <Formik
             initialValues={initalFormValues}
@@ -85,9 +85,9 @@ export default function Login() {
                     <View style={styles.noAccountTextContainer}>
                         <Text> Don't have an account? </Text>
                         <TouchableOpacity
-                            onPress={() => {
-                                console.log("sign up");
-                            }}
+                            onPress={() =>
+                                navigation.navigate("FirstRunWizard")
+                            }
                         >
                             <Text style={styles.signUpText}>Sign Up</Text>
                         </TouchableOpacity>

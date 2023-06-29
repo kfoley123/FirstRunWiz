@@ -7,9 +7,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./Screens/Login";
+import FirstRunWizard from "./Screens/FirstRunWizard";
 
 type RootStackParamList = {
     Login: undefined;
+    FirstRunWizard: undefined;
 };
 
 const Tab = createBottomTabNavigator();
@@ -46,6 +48,15 @@ export default function App() {
                         name="Login"
                         component={Login}
                         options={{ headerShown: false }}
+                    ></Stack.Screen>
+                    <Stack.Screen
+                        name="FirstRunWizard"
+                        component={FirstRunWizard}
+                        options={{
+                            headerTitle: "",
+                            headerShown: true,
+                            headerBackTitle: "Cancel",
+                        }}
                     ></Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>

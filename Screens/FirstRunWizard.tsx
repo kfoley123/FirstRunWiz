@@ -10,9 +10,8 @@ import Step2 from "../Components/FirstRunWizSteps/Step2";
 
 type FirstRunProps = { navigation: any; route: any };
 
-const wizard = useRef<WizardRef>(null);
-
-export default function FirstRunWizard() {
+export default function FirstRunWizard(props: FirstRunProps) {
+    const wizard = useRef<WizardRef>(null);
     const [isFirstStep, setIsFirstStep] = useState(true);
     const [isLastStep, setIsLastStep] = useState(false);
     const [currentStep, setCurrentStep] = useState(0);
@@ -25,7 +24,11 @@ export default function FirstRunWizard() {
                 <Button
                     disabled={isFirstStep}
                     title="Prev"
-                    onPress={() => wizard.current.prev()}
+                    onPress={() => {
+                        if (wizard.current !== null) {
+                            wizard.current.prev();
+                        }
+                    }}
                 />
                 <Text>
                     {currentStep + 1} of {stepList.length}
@@ -33,7 +36,11 @@ export default function FirstRunWizard() {
                 <Button
                     disabled={isLastStep} //|| checkErrors(errors, currentStep)}
                     title="Next"
-                    onPress={() => wizard.current.next()}
+                    onPress={() => {
+                        if (wizard.current !== null) {
+                            wizard.current.next();
+                        }
+                    }}
                 />
             </View>
             <Wizard
