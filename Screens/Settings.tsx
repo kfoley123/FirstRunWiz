@@ -22,18 +22,6 @@ import {
     generateEndTimes,
 } from "../Helpers/helpers";
 
-type AvailableDay = { value: number; label: string; checked: boolean };
-
-type SettingsValues = {
-    businessName: string;
-    availableDays: AvailableDay[];
-    deposit: string;
-    regularHoursStart: string;
-    regularHoursEnd: string;
-    clientEmailNotifications: boolean;
-    clientSMSNotifications: boolean;
-};
-
 const SettingsSchema = Yup.object().shape({
     businessName: Yup.string().required("Business Name is required"),
     availableDays: Yup.array()
