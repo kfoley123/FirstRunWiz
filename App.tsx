@@ -53,9 +53,7 @@ export default function App() {
                         name="FirstRunWizard"
                         component={FirstRunWizard}
                         options={{
-                            headerTitle: "",
-                            headerShown: true,
-                            headerBackTitle: "Cancel",
+                            headerShown: false,
                         }}
                     ></Stack.Screen>
                 </Stack.Navigator>

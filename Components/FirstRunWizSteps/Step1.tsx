@@ -3,7 +3,6 @@ import { StyleSheet, Text, TextInput, SafeAreaView } from "react-native";
 import { useFormikContext } from "formik";
 import { FirstRunValues, SettingsFormValues } from "../../customTypes";
 import Errors from "../Errors";
-import Seperator from "../Seperator";
 
 export default function Step1() {
     const { values, errors, handleChange } = useFormikContext<FirstRunValues>();

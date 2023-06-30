@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useFormikContext } from "formik";
 import { FirstRunValues } from "../../customTypes";
 import SwitchSelector from "react-native-switch-selector";

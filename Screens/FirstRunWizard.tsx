@@ -1,6 +1,13 @@
 import React, { useRef, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, SafeAreaView } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    View,
+    Button,
+    SafeAreaView,
+    Alert,
+} from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import Wizard, { WizardRef } from "react-native-wizard";
@@ -12,9 +19,9 @@ import Step4 from "../Components/FirstRunWizSteps/Step4";
 import Step5 from "../Components/FirstRunWizSteps/Step5";
 import Step6 from "../Components/FirstRunWizSteps/Step6";
 
-type FirstRunProps = { navigation: any; route: any };
+type FirstRunProps = { navigation: any };
 
-export default function FirstRunWizard(props: FirstRunProps) {
+export default function FirstRunWizard({ navigation }: FirstRunProps) {
     const wizard = useRef<WizardRef>(null);
     const [isFirstStep, setIsFirstStep] = useState(true);
     const [isLastStep, setIsLastStep] = useState(false);
@@ -116,6 +123,24 @@ export default function FirstRunWizard(props: FirstRunProps) {
         >
             {({ errors }) => (
                 <SafeAreaView>
+                    <View style={styles.cancelButton}>
+                        <Button
+                            title="Cancel"
+                            onPress={() =>
+                                Alert.alert(
+                                    "Are you sure you want to cancel?",
+                                    "",
+                                    [
+                                        {
+                                            text: "Cancel Set Up",
+                                            onPress: () => navigation.goBack(),
+                                        },
+                                    ]
+                                )
+                            }
+                        />
+                    </View>
+
                     <View style={styles.firstRunButtons}>
                         <Button
                             disabled={isFirstStep}
@@ -162,12 +187,19 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
+    cancelButton: {
+        backgroundColor: "#FFF",
+        borderTopWidth: 1,
+        borderTopColor: "#dedede",
+        marginTop: "1%",
+    },
     firstRunButtons: {
         justifyContent: "space-between",
         flexDirection: "row",
         backgroundColor: "#FFF",
         borderBottomColor: "#dedede",
         borderBottomWidth: 1,
-        paddingTop: 60,
+        paddingTop: 40,
+        paddingHorizontal: "3%",
     },
 });
