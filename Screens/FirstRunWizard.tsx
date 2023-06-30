@@ -1,12 +1,16 @@
 import React, { useRef, useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Button, SafeAreaView } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import Wizard, { WizardRef } from "react-native-wizard";
 import Step1 from "../Components/FirstRunWizSteps/Step1";
 import Step2 from "../Components/FirstRunWizSteps/Step2";
-import { FirstRunValues, SettingsFormValues } from "../customTypes";
+import { FirstRunValues } from "../customTypes";
+import Step3 from "../Components/FirstRunWizSteps/Step3";
+import Step4 from "../Components/FirstRunWizSteps/Step4";
+import Step5 from "../Components/FirstRunWizSteps/Step5";
+import Step6 from "../Components/FirstRunWizSteps/Step6";
 
 type FirstRunProps = { navigation: any; route: any };
 
@@ -16,7 +20,14 @@ export default function FirstRunWizard(props: FirstRunProps) {
     const [isLastStep, setIsLastStep] = useState(false);
     const [currentStep, setCurrentStep] = useState(0);
 
-    const stepList = [{ content: <Step1 /> }, { content: <Step2 /> }];
+    const stepList = [
+        { content: <Step1 /> },
+        { content: <Step2 /> },
+        { content: <Step3 /> },
+        { content: <Step4 /> },
+        { content: <Step5 /> },
+        { content: <Step6 /> },
+    ];
 
     const initalFormValues: FirstRunValues = {
         ProfileValues: { email: "", phone: "", name: "" },
@@ -104,7 +115,7 @@ export default function FirstRunWizard(props: FirstRunProps) {
             validateOnMount={true}
         >
             {({ errors }) => (
-                <>
+                <SafeAreaView>
                     <View style={styles.firstRunButtons}>
                         <Button
                             disabled={isFirstStep}
@@ -138,7 +149,7 @@ export default function FirstRunWizard(props: FirstRunProps) {
                             setCurrentStep(currentStep);
                         }}
                     />
-                </>
+                </SafeAreaView>
             )}
         </Formik>
     );

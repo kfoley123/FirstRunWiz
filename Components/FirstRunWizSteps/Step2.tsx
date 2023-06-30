@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 import { Formik, useFormikContext } from "formik";
-import * as Yup from "yup";
 import { FirstRunValues } from "../../customTypes";
 import Errors from "../Errors";
 
