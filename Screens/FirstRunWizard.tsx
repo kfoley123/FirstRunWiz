@@ -102,8 +102,13 @@ export default function FirstRunWizard({ navigation }: FirstRunProps) {
                     checked: Yup.boolean(),
                 })
             )
-            .compact((v) => !v.checked)
-            .min(1, "You must check at least one day"),
+            .test(
+                "atLeastOneDay",
+                "You must check at least one day",
+                function (value) {
+                    return value?.some((day) => day.checked);
+                }
+            ),
         deposit: Yup.string().matches(/^\d+(?:\.\d{1,2})?$/, "Invalid amount"),
         regularHoursStart: Yup.string().required(
             "Regular hours start time is required"
