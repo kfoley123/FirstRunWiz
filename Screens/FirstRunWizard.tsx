@@ -11,13 +11,15 @@ import {
 import { Formik } from "formik";
 import * as Yup from "yup";
 import Wizard, { WizardRef } from "react-native-wizard";
+import { FirstRunValues } from "../customTypes";
 import Step1 from "../Components/FirstRunWizSteps/Step1";
 import Step2 from "../Components/FirstRunWizSteps/Step2";
-import { FirstRunValues } from "../customTypes";
 import Step3 from "../Components/FirstRunWizSteps/Step3";
 import Step4 from "../Components/FirstRunWizSteps/Step4";
 import Step5 from "../Components/FirstRunWizSteps/Step5";
 import Step6 from "../Components/FirstRunWizSteps/Step6";
+import Step7 from "../Components/FirstRunWizSteps/Step7";
+import Summary from "../Components/FirstRunWizSteps/Summary";
 
 type FirstRunProps = { navigation: any };
 
@@ -34,6 +36,8 @@ export default function FirstRunWizard({ navigation }: FirstRunProps) {
         { content: <Step4 /> },
         { content: <Step5 /> },
         { content: <Step6 /> },
+        { content: <Step7 /> },
+        { content: <Summary /> },
     ];
 
     const initalFormValues: FirstRunValues = {
@@ -75,7 +79,21 @@ export default function FirstRunWizard({ navigation }: FirstRunProps) {
         phone: Yup.string()
             .matches(/^[0-9]{10}$/, "Invalid phone number")
             .required("Phone number is required"),
-        businessName: Yup.string().required("Business Name is required"),
+        password: Yup.string()
+            .required("Password is required")
+            .min(4, "Must be at least 4 characters"),
+        confirmPassword: Yup.string()
+            .required("Password is required")
+            .test("Passwords match", "Passwords must match", function (value) {
+                const { password } = this.parent;
+                if (password !== value) {
+                    return false;
+                }
+            }),
+        businessName: Yup.string()
+            .required("Business Name is required")
+            .min(4, "Must be at least 4 characters")
+            .max(50, "Must be less than 50 characters"),
         availableDays: Yup.array()
             .of(
                 Yup.object().shape({
@@ -160,6 +178,7 @@ export default function FirstRunWizard({ navigation }: FirstRunProps) {
                             onPress={() => {
                                 if (wizard.current !== null) {
                                     wizard.current.next();
+                                    console.log(errors);
                                 }
                             }}
                         />

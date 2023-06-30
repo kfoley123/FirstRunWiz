@@ -1,34 +1,50 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
-import { Formik, useFormikContext } from "formik";
+import { StyleSheet, Text, View } from "react-native";
+import { useFormikContext } from "formik";
 import { FirstRunValues } from "../../customTypes";
 import Errors from "../Errors";
+import { checkboxHitSlop } from "../../Helpers/helpers";
+import Checkbox from "expo-checkbox";
 
 export default function Step4() {
-    const { values, errors, handleChange, handleBlur } =
+    const { values, errors, setFieldValue } =
         useFormikContext<FirstRunValues>();
+    console.log(errors);
     return (
         <View>
-            <Text style={styles.header}>Deposit Amount</Text>
+            <Text style={styles.header}>Available Days</Text>
 
             <Text style={styles.sectionInfo}>
-                Enter the deposit amount (CAD) for a client to book an
-                appointment.
+                Check which days of the week are you available.
             </Text>
-            <View style={styles.optionRow}>
-                <Text>$</Text>
-                <TextInput
-                    keyboardType="numeric"
-                    returnKeyType="done"
-                    onChangeText={handleChange("SettingsValues.deposit")}
-                    onBlur={handleBlur("SettingsValues.deposit")}
-                    value={values.SettingsValues.deposit}
-                    style={styles.depositInput}
-                    defaultValue={values.SettingsValues.deposit}
-                ></TextInput>
+
+            <View
+                style={{
+                    flexDirection: "row",
+                    justifyContent: "space-evenly",
+                    flexWrap: "wrap",
+                }}
+            >
+                {values.SettingsValues.availableDays.map((day, i) => (
+                    <View key={i} style={styles.checkboxContainer}>
+                        <Checkbox
+                            style={styles.checkbox}
+                            value={day.checked}
+                            onValueChange={(value) =>
+                                setFieldValue(
+                                    `SettingsValues.availableDays[${i}].checked`,
+                                    value
+                                )
+                            }
+                            color={day.checked ? "#4630EB" : undefined}
+                            hitSlop={checkboxHitSlop}
+                        />
+                        <Text>{day.label}</Text>
+                    </View>
+                ))}
             </View>
 
-            <Errors errorMessage={errors.SettingsValues?.deposit} />
+            <Errors errorMessage={errors.SettingsValues?.availableDays} />
         </View>
     );
 }
@@ -44,14 +60,9 @@ const styles = StyleSheet.create({
         paddingBottom: "4%",
         textAlign: "center",
     },
-    optionRow: { flexDirection: "row", justifyContent: "center" },
-    sectionInfo: { paddingHorizontal: "5%", marginBottom: 10 },
-    depositInput: {
-        borderWidth: 1,
-        borderColor: "slategray",
-        borderRadius: 3,
-        width: 75,
-        height: 30,
-        textAlign: "center",
+    sectionInfo: { textAlign: "center", marginBottom: 10 },
+    checkboxContainer: { alignItems: "center" },
+    checkbox: {
+        margin: "10%",
     },
 });

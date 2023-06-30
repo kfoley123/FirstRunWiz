@@ -1,66 +1,42 @@
 import React from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
-import { useFormikContext } from "formik";
+import { Formik, useFormikContext } from "formik";
 import { FirstRunValues } from "../../customTypes";
 import Errors from "../Errors";
-import { fullDayTimes, generateEndTimes } from "../../Helpers/helpers";
-import SelectDropdown from "react-native-select-dropdown";
 
 export default function Step5() {
     const { values, errors, handleChange, handleBlur } =
         useFormikContext<FirstRunValues>();
     return (
         <View>
-            <Text style={styles.header}> Hours</Text>
+            <Text style={styles.header}>Deposit Amount</Text>
 
             <Text style={styles.sectionInfo}>
-                The start and end time of a regular work day according to 24
-                hour clock.
+                Enter the deposit amount (CAD) for a client to book an
+                appointment.
             </Text>
-            <View style={styles.selectContainer}>
-                <Text style={styles.option}>Start Time</Text>
-                <SelectDropdown
-                    data={fullDayTimes()}
-                    renderDropdownIcon={() => <Text>▼</Text>}
-                    buttonStyle={styles.dropdownButtonStyle}
-                    onSelect={handleChange("SettingsValues.regularHoursStart")}
-                    onBlur={() =>
-                        handleBlur("SettingsValues.regularHoursStart")
-                    }
-                    defaultButtonText={"Set"}
-                    defaultValue={values.SettingsValues.regularHoursStart}
-                />
+            <View style={styles.optionRow}>
+                <Text>$</Text>
+                <TextInput
+                    keyboardType="numeric"
+                    returnKeyType="done"
+                    onChangeText={handleChange("SettingsValues.deposit")}
+                    onBlur={handleBlur("SettingsValues.deposit")}
+                    value={values.SettingsValues.deposit}
+                    style={styles.depositInput}
+                    defaultValue={values.SettingsValues.deposit}
+                ></TextInput>
             </View>
 
-            <Errors errorMessage={errors.SettingsValues?.regularHoursStart} />
-
-            {values.SettingsValues.regularHoursStart && (
-                <View style={styles.selectContainer}>
-                    <Text style={styles.option}>End Time</Text>
-                    <SelectDropdown
-                        data={generateEndTimes(
-                            values.SettingsValues.regularHoursStart
-                        )}
-                        renderDropdownIcon={() => <Text>▼</Text>}
-                        buttonStyle={styles.dropdownButtonStyle}
-                        onSelect={handleChange(
-                            "SettingsValues.regularHoursEnd"
-                        )}
-                        onBlur={() =>
-                            handleBlur("SettingsValues.regularHoursEnd")
-                        }
-                        defaultButtonText={"Set"}
-                        defaultValue={values.SettingsValues.regularHoursEnd}
-                    />
-                </View>
-            )}
-
-            <Errors errorMessage={errors.SettingsValues?.regularHoursEnd} />
+            <Errors errorMessage={errors.SettingsValues?.deposit} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    container: {
+        padding: "1%",
+    },
     header: {
         fontSize: 16,
         fontWeight: "500",
@@ -68,20 +44,14 @@ const styles = StyleSheet.create({
         paddingBottom: "4%",
         textAlign: "center",
     },
+    optionRow: { flexDirection: "row", justifyContent: "center" },
     sectionInfo: { paddingHorizontal: "5%", marginBottom: 10 },
-    selectContainer: {
-        flexDirection: "row",
-        paddingVertical: 5,
-        alignItems: "center",
-        justifyContent: "space-evenly",
-    },
-    dropdownButtonStyle: {
-        borderRadius: 6,
-        height: 30,
-        marginHorizontal: "10%",
-        width: 120,
+    depositInput: {
         borderWidth: 1,
-        borderColor: "black",
+        borderColor: "slategray",
+        borderRadius: 3,
+        width: 75,
+        height: 30,
+        textAlign: "center",
     },
-    option: { marginLeft: "7%" },
 });

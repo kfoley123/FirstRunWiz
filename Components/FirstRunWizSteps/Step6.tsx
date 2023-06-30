@@ -1,102 +1,61 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 import { useFormikContext } from "formik";
 import { FirstRunValues } from "../../customTypes";
-import SwitchSelector from "react-native-switch-selector";
-import { checkboxHitSlop } from "../../Helpers/helpers";
-import Checkbox from "expo-checkbox";
-
-// BUG: if switch selector is changed to "set" and then you go back a page and then come back, page will remember switch selector being set to "set" but state variable will be reset so checkboxes aren't rendered. This should be fixed with async
+import Errors from "../Errors";
+import { fullDayTimes, generateEndTimes } from "../../Helpers/helpers";
+import SelectDropdown from "react-native-select-dropdown";
 
 export default function Step6() {
-    const { values, errors, setFieldValue } =
+    const { values, errors, handleChange, handleBlur } =
         useFormikContext<FirstRunValues>();
-
-    const [noNotificationsChecked, setNoNotificationsChecked] = useState(true);
-
     return (
         <View>
-            <Text style={styles.header}>Client Notifications</Text>
+            <Text style={styles.header}> Hours</Text>
 
             <Text style={styles.sectionInfo}>
-                Check boxes to generate client SMS and/or Email notifcations.
+                The start and end time of a regular work day according to 24
+                hour clock.
             </Text>
-
-            <View style={styles.switchContainer}>
-                <SwitchSelector
-                    options={[
-                        { label: "None", value: true },
-                        { label: "Set", value: false },
-                    ]}
-                    initial={
-                        values.SettingsValues.clientEmailNotifications &&
-                        values.SettingsValues.clientSMSNotifications
-                            ? 1
-                            : 0
+            <View style={styles.selectContainer}>
+                <Text style={styles.option}>Start Time</Text>
+                <SelectDropdown
+                    data={fullDayTimes()}
+                    renderDropdownIcon={() => <Text>▼</Text>}
+                    buttonStyle={styles.dropdownButtonStyle}
+                    onSelect={handleChange("SettingsValues.regularHoursStart")}
+                    onBlur={() =>
+                        handleBlur("SettingsValues.regularHoursStart")
                     }
-                    hitSlop={checkboxHitSlop}
-                    buttonColor={"midnightblue"}
-                    onPress={(value: any) => {
-                        setNoNotificationsChecked(value);
-                        setFieldValue(
-                            "SettingsValues.clientEmailNotifications",
-                            !value
-                        );
-                        setFieldValue(
-                            "SettingsValues.clientSMSNotifications",
-                            !value
-                        );
-                    }}
+                    defaultButtonText={"Set"}
+                    defaultValue={values.SettingsValues.regularHoursStart}
                 />
             </View>
 
-            {!noNotificationsChecked && (
-                <>
-                    <View style={styles.notificationsContainer}>
-                        <Checkbox
-                            value={
-                                values.SettingsValues.clientEmailNotifications
-                            }
-                            onValueChange={(value) =>
-                                setFieldValue(
-                                    "SettingsValues.clientEmailNotifications",
-                                    value
-                                )
-                            }
-                            color={
-                                values.SettingsValues.clientEmailNotifications
-                                    ? "#4630EB"
-                                    : undefined
-                            }
-                            hitSlop={checkboxHitSlop}
-                        />
-                        <Text style={styles.checkboxText}>
-                            Clients will recieve email notifcations.
-                        </Text>
-                    </View>
+            <Errors errorMessage={errors.SettingsValues?.regularHoursStart} />
 
-                    <View style={styles.notificationsContainer}>
-                        <Checkbox
-                            value={values.SettingsValues.clientSMSNotifications}
-                            onValueChange={(value) =>
-                                setFieldValue(
-                                    "SettingsValues.clientSMSNotifications",
-                                    value
-                                )
-                            }
-                            color={
-                                values.SettingsValues.clientSMSNotifications
-                                    ? "#4630EB"
-                                    : undefined
-                            }
-                            hitSlop={checkboxHitSlop}
-                        />
-                        <Text style={styles.checkboxText}>
-                            Clients will recieve SMS notifcations.
-                        </Text>
-                    </View>
-                </>
+            {values.SettingsValues.regularHoursStart && (
+                <View style={styles.selectContainer}>
+                    <Text style={styles.option}>End Time</Text>
+                    <SelectDropdown
+                        data={generateEndTimes(
+                            values.SettingsValues.regularHoursStart
+                        )}
+                        renderDropdownIcon={() => <Text>▼</Text>}
+                        buttonStyle={styles.dropdownButtonStyle}
+                        onSelect={handleChange(
+                            "SettingsValues.regularHoursEnd"
+                        )}
+                        onBlur={() =>
+                            handleBlur("SettingsValues.regularHoursEnd")
+                        }
+                        defaultButtonText={"Set"}
+                        defaultValue={values.SettingsValues.regularHoursEnd}
+                    />
+                </View>
             )}
+
+            <Errors errorMessage={errors.SettingsValues?.regularHoursEnd} />
         </View>
     );
 }
@@ -110,12 +69,19 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     sectionInfo: { paddingHorizontal: "5%", marginBottom: 10 },
-    switchContainer: { alignItems: "center", padding: 25 },
-    notificationsContainer: {
+    selectContainer: {
         flexDirection: "row",
-        justifyContent: "center",
+        paddingVertical: 5,
         alignItems: "center",
-        marginVertical: 15,
+        justifyContent: "space-evenly",
     },
-    checkboxText: { paddingLeft: 10 },
+    dropdownButtonStyle: {
+        borderRadius: 6,
+        height: 30,
+        marginHorizontal: "10%",
+        width: 120,
+        borderWidth: 1,
+        borderColor: "black",
+    },
+    option: { marginLeft: "7%" },
 });

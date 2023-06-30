@@ -8,7 +8,7 @@ export default function Step1() {
     const { values, errors, handleChange } = useFormikContext<FirstRunValues>();
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.header}>Name</Text>
+            <Text style={styles.header}></Text>
 
             <TextInput
                 onChangeText={handleChange("ProfileValues.name")}
@@ -30,40 +30,33 @@ export default function Step1() {
 
             <Errors errorMessage={errors.ProfileValues?.email} />
 
-            <Text style={styles.header}>Password</Text>
+            <Text style={styles.header}>Phone Number </Text>
+
+            <Text style={styles.caption}>
+                Enter phone number in format 555 555 5555
+            </Text>
 
             <TextInput
-                onChangeText={handleChange("password")}
-                autoCapitalize="words"
-                value={values.password}
+                onChangeText={handleChange("ProfileValues.phone")}
+                keyboardType={"phone-pad"}
+                value={values.ProfileValues.phone}
                 style={styles.input}
             ></TextInput>
 
-            <Errors errorMessage={errors.password} />
-
-            <Text style={styles.header}> Confirm Password</Text>
-
-            <TextInput
-                onChangeText={handleChange("confirmPassword")}
-                autoCapitalize="words"
-                value={values.confirmPassword}
-                style={styles.input}
-            ></TextInput>
-
-            <Errors errorMessage={errors.confirmPassword} />
+            <Errors errorMessage={errors.ProfileValues?.phone} />
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        padding: "1%",
+        paddingVertical: "20%",
     },
     header: {
-        fontSize: 16,
-        fontWeight: "500",
-        paddingVertical: "2%",
-        textAlign: "center",
+        fontSize: 14,
+        fontWeight: "400",
+        paddingVertical: "1%",
+        marginLeft: "11%",
     },
     input: {
         backgroundColor: "white",
@@ -75,4 +68,5 @@ const styles = StyleSheet.create({
         marginVertical: "3%",
         marginHorizontal: "12%",
     },
+    caption: { fontSize: 11, textAlign: "center", marginVertical: "1%" },
 });

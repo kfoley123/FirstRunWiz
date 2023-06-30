@@ -1,50 +1,27 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 import { useFormikContext } from "formik";
 import { FirstRunValues } from "../../customTypes";
 import Errors from "../Errors";
-import { checkboxHitSlop } from "../../Helpers/helpers";
-import Checkbox from "expo-checkbox";
 
 export default function Step3() {
-    const { values, errors, setFieldValue } =
-        useFormikContext<FirstRunValues>();
-    console.log(errors);
+    const { values, errors, handleChange } = useFormikContext<FirstRunValues>();
     return (
         <View>
-            <Text style={styles.header}>Available Days</Text>
+            <Text style={styles.header}>Business Name</Text>
 
-            <Text style={styles.sectionInfo}>
-                Check which days of the week are you available.
+            <Text style={styles.sectionInfoOpen}>
+                The name of your business as it will appear to your clients.
             </Text>
 
-            <View
-                style={{
-                    flexDirection: "row",
-                    justifyContent: "space-evenly",
-                    flexWrap: "wrap",
-                }}
-            >
-                {values.SettingsValues.availableDays.map((day, i) => (
-                    <View key={i} style={styles.checkboxContainer}>
-                        <Checkbox
-                            style={styles.checkbox}
-                            value={day.checked}
-                            onValueChange={(value) =>
-                                setFieldValue(
-                                    `SettingsValues.availableDays[${i}].checked`,
-                                    value
-                                )
-                            }
-                            color={day.checked ? "#4630EB" : undefined}
-                            hitSlop={checkboxHitSlop}
-                        />
-                        <Text>{day.label}</Text>
-                    </View>
-                ))}
-            </View>
+            <TextInput
+                onChangeText={handleChange("SettingsValues.businessName")}
+                autoCapitalize="words"
+                value={values.SettingsValues.businessName}
+                style={styles.input}
+            ></TextInput>
 
-            <Errors errorMessage={errors.SettingsValues?.availableDays} />
+            <Errors errorMessage={errors.SettingsValues?.businessName} />
         </View>
     );
 }
@@ -60,9 +37,15 @@ const styles = StyleSheet.create({
         paddingBottom: "4%",
         textAlign: "center",
     },
-    sectionInfo: { textAlign: "center", marginBottom: 10 },
-    checkboxContainer: { alignItems: "center" },
-    checkbox: {
-        margin: "10%",
+    sectionInfoOpen: { paddingHorizontal: "6%" },
+    input: {
+        backgroundColor: "white",
+        borderWidth: 1,
+        borderColor: "black",
+        height: 40,
+        padding: 10,
+        borderRadius: 4,
+        marginVertical: "5%",
+        marginHorizontal: "12%",
     },
 });

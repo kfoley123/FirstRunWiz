@@ -1,43 +1,53 @@
 import React from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
-import { Formik, useFormikContext } from "formik";
+import { useFormikContext } from "formik";
 import { FirstRunValues } from "../../customTypes";
 import Errors from "../Errors";
 
 export default function Step2() {
-    const { values, errors, handleChange } = useFormikContext<FirstRunValues>();
+    const { values, errors, handleChange, handleBlur } =
+        useFormikContext<FirstRunValues>();
     return (
-        <View>
-            <Text style={styles.header}>Business Name</Text>
-
-            <Text style={styles.sectionInfoOpen}>
-                The name of your business as it will appear to your clients.
-            </Text>
+        <View style={styles.container}>
+            <Text style={styles.header}>Password</Text>
 
             <TextInput
-                onChangeText={handleChange("SettingsValues.businessName")}
+                onChangeText={handleChange("password")}
                 autoCapitalize="words"
-                value={values.SettingsValues.businessName}
+                value={values.password}
                 style={styles.input}
+                //TODO: add this when app is live, leaving it out for ease of use during building/testing
+                // secureTextEntry={true}
             ></TextInput>
 
-            <Errors errorMessage={errors.SettingsValues?.businessName} />
+            <Errors errorMessage={errors.password} />
+
+            <Text style={styles.header}> Confirm Password</Text>
+
+            <TextInput
+                onChangeText={handleChange("confirmPassword")}
+                autoCapitalize="words"
+                value={values.confirmPassword}
+                style={styles.input}
+                //TODO: add this when app is live, leaving it out for ease of use during building/testing
+                // secureTextEntry={true}
+            ></TextInput>
+
+            <Errors errorMessage={errors.confirmPassword} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        padding: "1%",
+        paddingVertical: "25%",
     },
     header: {
-        fontSize: 16,
-        fontWeight: "500",
-        paddingTop: "33%",
-        paddingBottom: "4%",
-        textAlign: "center",
+        fontSize: 14,
+        fontWeight: "400",
+        paddingTop: "7%",
+        marginLeft: "11%",
     },
-    sectionInfoOpen: { paddingHorizontal: "6%" },
     input: {
         backgroundColor: "white",
         borderWidth: 1,
@@ -45,7 +55,7 @@ const styles = StyleSheet.create({
         height: 40,
         padding: 10,
         borderRadius: 4,
-        marginVertical: "5%",
+        marginVertical: "3%",
         marginHorizontal: "12%",
     },
 });
