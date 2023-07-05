@@ -16,6 +16,7 @@ type RootStackParamList = {
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
+// TODO: replace "dog" with data from storage when available
 const dog = true;
 
 export default function App() {
@@ -39,7 +40,7 @@ export default function App() {
                 );
         }
     };
-
+    // TODO: replace "dog" with data from storage when available
     if (dog === true) {
         return (
             <NavigationContainer>

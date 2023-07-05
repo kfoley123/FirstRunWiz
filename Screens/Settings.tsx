@@ -21,7 +21,18 @@ import {
     fullDayTimes,
     generateEndTimes,
 } from "../Helpers/helpers";
-import { SettingsFormValues } from "../customTypes";
+
+type AvailableDay = { value: number; label: string; checked: boolean };
+
+type SettingsValues = {
+    businessName: string;
+    availableDays: AvailableDay[];
+    deposit: string;
+    operatingHoursStart: string;
+    operatingHoursEnd: string;
+    clientEmailNotifications: boolean;
+    clientSMSNotifications: boolean;
+};
 
 const SettingsSchema = Yup.object().shape({
     businessName: Yup.string().required("Business Name is required"),
@@ -36,21 +47,21 @@ const SettingsSchema = Yup.object().shape({
         .compact((v) => !v.checked)
         .min(1, "You must check at least one day"),
     deposit: Yup.string().matches(/^\d+(?:\.\d{1,2})?$/, "Invalid amount"),
-    regularHoursStart: Yup.string().required(
-        "Regular hours start time is required"
+    operatingHoursStart: Yup.string().required(
+        "Operating hours start time is required"
     ),
-    regularHoursEnd: Yup.string()
-        .required("Regular hours end time is required")
+    operatingHoursEnd: Yup.string()
+        .required("operating hours end time is required")
         .test(
             "isValidTime",
             "End time must be later than start time",
             function (value) {
-                const { regularHoursStart } = this.parent;
-                if (!regularHoursStart && !value) {
+                const { operatingHoursStart } = this.parent;
+                if (!operatingHoursStart && !value) {
                     return true;
                 }
-                if (regularHoursStart && value) {
-                    const startTime = Number(regularHoursStart.split(":", 1));
+                if (operatingHoursStart && value) {
+                    const startTime = Number(operatingHoursStart.split(":", 1));
                     const endTime = Number(value.split(":", 1));
                     return endTime > startTime;
                 }
@@ -58,7 +69,7 @@ const SettingsSchema = Yup.object().shape({
         ),
 });
 
-const settingsFormValues: SettingsFormValues = {
+const settingsFormValues: SettingsValues = {
     businessName: "",
     availableDays: [
         { value: 0, label: "Sunday", checked: false },
@@ -70,8 +81,8 @@ const settingsFormValues: SettingsFormValues = {
         { value: 6, label: "Saturday", checked: false },
     ],
     deposit: "0.00",
-    regularHoursStart: "",
-    regularHoursEnd: "",
+    operatingHoursStart: "",
+    operatingHoursEnd: "",
     clientEmailNotifications: false,
     clientSMSNotifications: false,
 };
@@ -81,13 +92,13 @@ export default function Settings() {
         businessName: false,
         workingDays: false,
         deposit: false,
-        regularHours: false,
+        operatingHours: false,
         clientNotifications: false,
     });
 
     const [noNotificationsChecked, setNoNotificationsChecked] = useState(true);
 
-    //TODO: update this to use the form values from db when those are availble rather than being hard coded
+    //TODO: update state variable to use the SMS & Email form values from storage when those are availble rather than being hard coded
 
     return (
         <Formik
@@ -272,7 +283,7 @@ export default function Settings() {
                                 setSectionInfoVisible((pVal) => {
                                     return {
                                         ...pVal,
-                                        regularHours: !pVal.regularHours,
+                                        operatingHours: !pVal.operatingHours,
                                     };
                                 })
                             }
@@ -286,12 +297,12 @@ export default function Settings() {
                     </View>
                     <Text
                         style={[
-                            sectionInfoVisible.regularHours
+                            sectionInfoVisible.operatingHours
                                 ? styles.sectionInfoOpen
                                 : styles.sectionInfo,
                         ]}
                     >
-                        The start and end time of a regular work day according
+                        The start and end time of a regualar work day according
                         to 24 hour clock.
                     </Text>
                     <View style={styles.selectContainer}>
@@ -300,37 +311,38 @@ export default function Settings() {
                             data={fullDayTimes()}
                             renderDropdownIcon={() => <Text>▼</Text>}
                             buttonStyle={styles.dropdownButtonStyle}
-                            onSelect={handleChange("regularHoursStart")}
-                            onBlur={() => handleBlur("regularHoursStart")}
+                            onSelect={handleChange("operatingHoursStart")}
+                            onBlur={() => handleBlur("operatingHoursStart")}
                             defaultButtonText={"Set"}
-                            defaultValue={values.regularHoursStart}
+                            defaultValue={values.operatingHoursStart}
                         />
                     </View>
-                    {errors.regularHoursStart && touched.regularHoursStart ? (
+                    {errors.operatingHoursStart &&
+                    touched.operatingHoursStart ? (
                         <Text style={styles.errors}>
-                            {errors.regularHoursStart}
+                            {errors.operatingHoursStart}
                         </Text>
                     ) : null}
 
-                    {values.regularHoursStart && (
+                    {values.operatingHoursStart && (
                         <View style={styles.selectContainer}>
                             <Text style={styles.option}>End Time</Text>
                             <SelectDropdown
                                 data={generateEndTimes(
-                                    values.regularHoursStart
+                                    values.operatingHoursStart
                                 )}
                                 renderDropdownIcon={() => <Text>▼</Text>}
                                 buttonStyle={styles.dropdownButtonStyle}
-                                onSelect={handleChange("regularHoursEnd")}
-                                onBlur={() => handleBlur("regularHoursEnd")}
+                                onSelect={handleChange("operatingHoursEnd")}
+                                onBlur={() => handleBlur("operatingHoursEnd")}
                                 defaultButtonText={"Set"}
-                                defaultValue={values.regularHoursEnd}
+                                defaultValue={values.operatingHoursEnd}
                             />
                         </View>
                     )}
-                    {errors.regularHoursEnd && touched.regularHoursEnd ? (
+                    {errors.operatingHoursEnd && touched.operatingHoursEnd ? (
                         <Text style={styles.errors}>
-                            {errors.regularHoursEnd}
+                            {errors.operatingHoursEnd}
                         </Text>
                     ) : null}
 
