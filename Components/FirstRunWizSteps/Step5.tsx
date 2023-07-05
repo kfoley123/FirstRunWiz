@@ -20,15 +20,15 @@ export default function Step5() {
                 <TextInput
                     keyboardType="numeric"
                     returnKeyType="done"
-                    onChangeText={handleChange("SettingsValues.deposit")}
-                    onBlur={handleBlur("SettingsValues.deposit")}
-                    value={values.SettingsValues.deposit}
+                    onChangeText={handleChange("deposit")}
+                    onBlur={handleBlur("deposit")}
+                    value={values.deposit}
                     style={styles.depositInput}
-                    defaultValue={values.SettingsValues.deposit}
+                    defaultValue={values.deposit}
                 ></TextInput>
             </View>
 
-            <Errors errorMessage={errors.SettingsValues?.deposit} />
+            <Errors errorMessage={errors.deposit} />
         </View>
     );
 }

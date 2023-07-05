@@ -17,8 +17,16 @@ export type ProfileFormValues = {
 };
 
 export type FirstRunValues = {
-    SettingsValues: SettingsFormValues;
-    ProfileValues: ProfileFormValues;
+    businessName: string;
+    availableDays: AvailableDay[];
+    deposit: string;
+    regularHoursStart: string;
+    regularHoursEnd: string;
+    clientEmailNotifications: boolean;
+    clientSMSNotifications: boolean;
+    name: string;
+    email: string;
+    phone: string;
     password: string;
     confirmPassword: string;
 };

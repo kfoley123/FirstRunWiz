@@ -8,7 +8,7 @@ import {
     SafeAreaView,
     Alert,
 } from "react-native";
-import { Formik } from "formik";
+import { Formik, FormikErrors } from "formik";
 import * as Yup from "yup";
 import Wizard, { WizardRef } from "react-native-wizard";
 import { FirstRunValues } from "../customTypes";
@@ -41,24 +41,25 @@ export default function FirstRunWizard({ navigation }: FirstRunProps) {
     ];
 
     const initalFormValues: FirstRunValues = {
-        ProfileValues: { email: "", phone: "", name: "" },
-        SettingsValues: {
-            businessName: "",
-            availableDays: [
-                { value: 0, label: "Sunday", checked: false },
-                { value: 1, label: "Monday", checked: false },
-                { value: 2, label: "Tuesday", checked: false },
-                { value: 3, label: "Wednesday", checked: false },
-                { value: 4, label: "Thursday", checked: false },
-                { value: 5, label: "Friday", checked: false },
-                { value: 6, label: "Saturday", checked: false },
-            ],
-            deposit: "0.00",
-            regularHoursStart: "",
-            regularHoursEnd: "",
-            clientEmailNotifications: false,
-            clientSMSNotifications: false,
-        },
+        email: "",
+        phone: "",
+        name: "",
+        businessName: "",
+        availableDays: [
+            { value: 0, label: "Sunday", checked: false },
+            { value: 1, label: "Monday", checked: false },
+            { value: 2, label: "Tuesday", checked: false },
+            { value: 3, label: "Wednesday", checked: false },
+            { value: 4, label: "Thursday", checked: false },
+            { value: 5, label: "Friday", checked: false },
+            { value: 6, label: "Saturday", checked: false },
+        ],
+        deposit: "0.00",
+        regularHoursStart: "",
+        regularHoursEnd: "",
+        clientEmailNotifications: false,
+        clientSMSNotifications: false,
+
         password: "",
         confirmPassword: "",
     };
@@ -178,12 +179,13 @@ export default function FirstRunWizard({ navigation }: FirstRunProps) {
                             {currentStep + 1} of {stepList.length}
                         </Text>
                         <Button
-                            disabled={isLastStep} //|| checkErrors(errors, currentStep)}
+                            disabled={
+                                isLastStep || checkErrors(errors, currentStep)
+                            }
                             title="Next"
                             onPress={() => {
                                 if (wizard.current !== null) {
                                     wizard.current.next();
-                                    console.log(errors);
                                 }
                             }}
                         />
@@ -202,6 +204,13 @@ export default function FirstRunWizard({ navigation }: FirstRunProps) {
             )}
         </Formik>
     );
+}
+
+function checkErrors(errors: FormikErrors<FirstRunValues>, currentStep) {
+    if (currentStep === 0 && !errors.name && !errors.email && !errors.phone) {
+        return false;
+    }
+    return true;
 }
 
 const styles = StyleSheet.create({

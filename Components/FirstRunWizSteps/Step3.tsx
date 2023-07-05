@@ -15,13 +15,13 @@ export default function Step3() {
             </Text>
 
             <TextInput
-                onChangeText={handleChange("SettingsValues.businessName")}
+                onChangeText={handleChange("businessName")}
                 autoCapitalize="words"
-                value={values.SettingsValues.businessName}
+                value={values.businessName}
                 style={styles.input}
             ></TextInput>
 
-            <Errors errorMessage={errors.SettingsValues?.businessName} />
+            <Errors errorMessage={errors.businessName} />
         </View>
     );
 }

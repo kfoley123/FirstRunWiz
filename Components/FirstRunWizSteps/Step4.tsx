@@ -25,14 +25,14 @@ export default function Step4() {
                     flexWrap: "wrap",
                 }}
             >
-                {values.SettingsValues.availableDays.map((day, i) => (
+                {values.availableDays.map((day, i) => (
                     <View key={i} style={styles.checkboxContainer}>
                         <Checkbox
                             style={styles.checkbox}
                             value={day.checked}
                             onValueChange={(value) =>
                                 setFieldValue(
-                                    `SettingsValues.availableDays[${i}].checked`,
+                                    `availableDays[${i}].checked`,
                                     value
                                 )
                             }
@@ -44,7 +44,7 @@ export default function Step4() {
                 ))}
             </View>
 
-            <Errors errorMessage={errors.SettingsValues?.availableDays} />
+            {/* <Errors errorMessage={errors.availableDays} /> */}
         </View>
     );
 }

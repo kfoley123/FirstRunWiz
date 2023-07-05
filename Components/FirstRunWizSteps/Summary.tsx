@@ -17,21 +17,21 @@ export default function Summary() {
                 {/* ----------------  Name -------------- */}
                 <View style={styles.row}>
                     <Text style={styles.subheader}>Name:</Text>
-                    <Text>{values.ProfileValues.name}</Text>
+                    <Text>{values.name}</Text>
                 </View>
 
                 <Seperator />
                 {/* ---------------- Email -------------- */}
                 <View style={styles.row}>
                     <Text style={styles.subheader}>Email:</Text>
-                    <Text>{values.ProfileValues.email}</Text>
+                    <Text>{values.email}</Text>
                 </View>
 
                 <Seperator />
                 {/* ----------------  Phone -------------- */}
                 <View style={styles.row}>
                     <Text style={styles.subheader}>Phone:</Text>
-                    <Text>{values.ProfileValues.phone}</Text>
+                    <Text>{values.phone}</Text>
                 </View>
 
                 <Seperator />
@@ -39,7 +39,7 @@ export default function Summary() {
                 {/* ----------------  Business Name -------------- */}
                 <View style={styles.row}>
                     <Text style={styles.subheader}>Business Name:</Text>
-                    <Text>{values.SettingsValues.businessName}</Text>
+                    <Text>{values.businessName}</Text>
                 </View>
 
                 <Seperator />
@@ -49,7 +49,7 @@ export default function Summary() {
                 <View>
                     <Text style={styles.subheader}>Available Days:</Text>
 
-                    {values.SettingsValues.availableDays
+                    {values.availableDays
                         .filter((day) => day.checked)
                         .map((day, i) => (
                             <Text key={i}>{day.label}</Text>
@@ -61,7 +61,7 @@ export default function Summary() {
 
                 <View style={styles.row}>
                     <Text style={styles.subheader}>Deposit Amount:</Text>
-                    <Text>{values.SettingsValues.deposit}</Text>
+                    <Text>{values.deposit}</Text>
                 </View>
                 <Seperator />
 
@@ -71,11 +71,11 @@ export default function Summary() {
                     <Text style={styles.subheader}>Regular Hours</Text>
                     <View style={styles.row}>
                         <Text style={styles.field}>Start Time:</Text>
-                        <Text>{values.SettingsValues.regularHoursStart}</Text>
+                        <Text>{values.regularHoursStart}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.field}>End Time:</Text>
-                        <Text>{values.SettingsValues.regularHoursEnd}</Text>
+                        <Text>{values.regularHoursEnd}</Text>
                     </View>
                 </View>
                 <Seperator />
@@ -85,14 +85,12 @@ export default function Summary() {
                     <Text style={styles.subheader}>Client Notifications</Text>
                     <View style={styles.row}>
                         <Text style={styles.field}>SMS Notifcations:</Text>
-                        <Text>
-                            {values.SettingsValues.clientSMSNotifications.toString()}
-                        </Text>
+                        <Text>{values.clientSMSNotifications.toString()}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.field}>Email Notifcations:</Text>
                         <Text>
-                            {values.SettingsValues.clientEmailNotifications.toString()}
+                            {values.clientEmailNotifications.toString()}
                         </Text>
                     </View>
                 </View>

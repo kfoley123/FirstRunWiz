@@ -23,39 +23,31 @@ export default function Step6() {
                     data={fullDayTimes()}
                     renderDropdownIcon={() => <Text>▼</Text>}
                     buttonStyle={styles.dropdownButtonStyle}
-                    onSelect={handleChange("SettingsValues.regularHoursStart")}
-                    onBlur={() =>
-                        handleBlur("SettingsValues.regularHoursStart")
-                    }
+                    onSelect={handleChange("regularHoursStart")}
+                    onBlur={() => handleBlur("regularHoursStart")}
                     defaultButtonText={"Set"}
-                    defaultValue={values.SettingsValues.regularHoursStart}
+                    defaultValue={values.regularHoursStart}
                 />
             </View>
 
-            <Errors errorMessage={errors.SettingsValues?.regularHoursStart} />
+            <Errors errorMessage={errors.regularHoursStart} />
 
-            {values.SettingsValues.regularHoursStart && (
+            {values.regularHoursStart && (
                 <View style={styles.selectContainer}>
                     <Text style={styles.option}>End Time</Text>
                     <SelectDropdown
-                        data={generateEndTimes(
-                            values.SettingsValues.regularHoursStart
-                        )}
+                        data={generateEndTimes(values.regularHoursStart)}
                         renderDropdownIcon={() => <Text>▼</Text>}
                         buttonStyle={styles.dropdownButtonStyle}
-                        onSelect={handleChange(
-                            "SettingsValues.regularHoursEnd"
-                        )}
-                        onBlur={() =>
-                            handleBlur("SettingsValues.regularHoursEnd")
-                        }
+                        onSelect={handleChange("regularHoursEnd")}
+                        onBlur={() => handleBlur("regularHoursEnd")}
                         defaultButtonText={"Set"}
-                        defaultValue={values.SettingsValues.regularHoursEnd}
+                        defaultValue={values.regularHoursEnd}
                     />
                 </View>
             )}
 
-            <Errors errorMessage={errors.SettingsValues?.regularHoursEnd} />
+            <Errors errorMessage={errors.regularHoursEnd} />
         </View>
     );
 }

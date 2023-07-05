@@ -29,8 +29,8 @@ export default function Step7() {
                         { label: "Set", value: false },
                     ]}
                     initial={
-                        values.SettingsValues.clientEmailNotifications &&
-                        values.SettingsValues.clientSMSNotifications
+                        values.clientEmailNotifications &&
+                        values.clientSMSNotifications
                             ? 1
                             : 0
                     }
@@ -38,14 +38,8 @@ export default function Step7() {
                     buttonColor={"midnightblue"}
                     onPress={(value: any) => {
                         setNoNotificationsChecked(value);
-                        setFieldValue(
-                            "SettingsValues.clientEmailNotifications",
-                            !value
-                        );
-                        setFieldValue(
-                            "SettingsValues.clientSMSNotifications",
-                            !value
-                        );
+                        setFieldValue("clientEmailNotifications", !value);
+                        setFieldValue("clientSMSNotifications", !value);
                     }}
                 />
             </View>
@@ -54,17 +48,12 @@ export default function Step7() {
                 <>
                     <View style={styles.notificationsContainer}>
                         <Checkbox
-                            value={
-                                values.SettingsValues.clientEmailNotifications
-                            }
+                            value={values.clientEmailNotifications}
                             onValueChange={(value) =>
-                                setFieldValue(
-                                    "SettingsValues.clientEmailNotifications",
-                                    value
-                                )
+                                setFieldValue("clientEmailNotifications", value)
                             }
                             color={
-                                values.SettingsValues.clientEmailNotifications
+                                values.clientEmailNotifications
                                     ? "#4630EB"
                                     : undefined
                             }
@@ -77,15 +66,12 @@ export default function Step7() {
 
                     <View style={styles.notificationsContainer}>
                         <Checkbox
-                            value={values.SettingsValues.clientSMSNotifications}
+                            value={values.clientSMSNotifications}
                             onValueChange={(value) =>
-                                setFieldValue(
-                                    "SettingsValues.clientSMSNotifications",
-                                    value
-                                )
+                                setFieldValue("clientSMSNotifications", value)
                             }
                             color={
-                                values.SettingsValues.clientSMSNotifications
+                                values.clientSMSNotifications
                                     ? "#4630EB"
                                     : undefined
                             }

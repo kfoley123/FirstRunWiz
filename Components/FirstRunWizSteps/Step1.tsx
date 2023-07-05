@@ -3,64 +3,48 @@ import { StyleSheet, Text, TextInput, SafeAreaView } from "react-native";
 import { useFormikContext } from "formik";
 import { FirstRunValues, SettingsFormValues } from "../../customTypes";
 import Errors from "../Errors";
-
-function formatPhoneNumber(phoneNumber: string) {
-    let input = phoneNumber.replace(/\D/g, "");
-    const size = input.length;
-    if (size > 0) {
-        input = "(" + input;
-    }
-    if (size > 3) {
-        input = input.slice(0, 4) + ") " + input.slice(4, 11);
-    }
-    if (size > 6) {
-        input = input.slice(0, 9) + "-" + input.slice(9);
-    }
-    return input;
-}
+import { formatPhoneNumber } from "../../Helpers/helpers";
 
 export default function Step1() {
     const { values, errors, handleChange, setFieldValue } =
         useFormikContext<FirstRunValues>();
+    console.log(errors);
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.header}>Name</Text>
 
             <TextInput
-                onChangeText={handleChange("ProfileValues.name")}
+                onChangeText={handleChange("name")}
                 autoCapitalize="words"
-                value={values.ProfileValues.name}
+                value={values.name}
                 style={styles.input}
             ></TextInput>
 
-            <Errors errorMessage={errors.ProfileValues?.name} />
+            <Errors errorMessage={errors.name} />
 
             <Text style={styles.header}>Email </Text>
 
             <TextInput
-                onChangeText={handleChange("ProfileValues.email")}
+                onChangeText={handleChange("email")}
                 autoCapitalize="none"
-                value={values.ProfileValues.email}
+                value={values.email}
                 style={styles.input}
             ></TextInput>
 
-            <Errors errorMessage={errors.ProfileValues?.email} />
+            <Errors errorMessage={errors.email} />
 
             <Text style={styles.header}>Phone Number </Text>
 
             <TextInput
                 onChangeText={(text) => {
-                    setFieldValue(
-                        "ProfileValues.phone",
-                        formatPhoneNumber(text)
-                    );
+                    setFieldValue("phone", formatPhoneNumber(text));
                 }}
                 keyboardType={"phone-pad"}
-                value={values.ProfileValues.phone}
+                value={values.phone}
                 style={styles.input}
             ></TextInput>
 
-            <Errors errorMessage={errors.ProfileValues?.phone} />
+            <Errors errorMessage={errors.phone} />
         </SafeAreaView>
     );
 }

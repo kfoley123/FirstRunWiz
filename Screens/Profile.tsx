@@ -18,6 +18,7 @@ import * as Yup from "yup";
 import CustomButton from "../Components/CustomButton";
 import Errors from "../Components/Errors";
 import { ProfileFormValues } from "../customTypes";
+import { formatPhoneNumber } from "../Helpers/helpers";
 
 export default function Profile() {
     const [modalVisible, setModalVisible] = useState(false);
@@ -170,9 +171,13 @@ export default function Profile() {
 
                                 <TextInput
                                     style={styles.input}
-                                    onBlur={handleBlur("phone")}
                                     keyboardType={"phone-pad"}
-                                    onChangeText={handleChange("phone")}
+                                    onChangeText={(text) => {
+                                        setFieldValue(
+                                            "phone",
+                                            formatPhoneNumber(text)
+                                        );
+                                    }}
                                     value={values.phone}
                                 />
 
