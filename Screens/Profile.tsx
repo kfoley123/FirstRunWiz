@@ -43,7 +43,7 @@ export default function Profile() {
             .max(256, "Must be less than 256 characters")
             .required("email is required"),
         phone: Yup.string()
-            .matches(/^[0-9]{10}$/, "Invalid phone number")
+            .min(14, "Invalid phone number")
             .required("Phone number is required"),
     });
 
