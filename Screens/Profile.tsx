@@ -25,7 +25,7 @@ export default function Profile() {
     const initalFormValues: ProfileFormValues = {
         name: "Cammy White",
         email: "123@CammyWhite.com",
-        phone: "5555555555",
+        phone: "(555) 555 5555",
     };
 
     const ProfileSchema = Yup.object().shape({

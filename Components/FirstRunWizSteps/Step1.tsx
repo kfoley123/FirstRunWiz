@@ -4,11 +4,27 @@ import { useFormikContext } from "formik";
 import { FirstRunValues, SettingsFormValues } from "../../customTypes";
 import Errors from "../Errors";
 
+function formatPhoneNumber(phoneNumber: string) {
+    let input = phoneNumber.replace(/\D/g, "");
+    const size = input.length;
+    if (size > 0) {
+        input = "(" + input;
+    }
+    if (size > 3) {
+        input = input.slice(0, 4) + ") " + input.slice(4, 11);
+    }
+    if (size > 6) {
+        input = input.slice(0, 9) + "-" + input.slice(9);
+    }
+    return input;
+}
+
 export default function Step1() {
-    const { values, errors, handleChange } = useFormikContext<FirstRunValues>();
+    const { values, errors, handleChange, setFieldValue } =
+        useFormikContext<FirstRunValues>();
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.header}></Text>
+            <Text style={styles.header}>Name</Text>
 
             <TextInput
                 onChangeText={handleChange("ProfileValues.name")}
@@ -23,7 +39,7 @@ export default function Step1() {
 
             <TextInput
                 onChangeText={handleChange("ProfileValues.email")}
-                autoCapitalize="words"
+                autoCapitalize="none"
                 value={values.ProfileValues.email}
                 style={styles.input}
             ></TextInput>
@@ -32,12 +48,13 @@ export default function Step1() {
 
             <Text style={styles.header}>Phone Number </Text>
 
-            <Text style={styles.caption}>
-                Enter phone number in format 555 555 5555
-            </Text>
-
             <TextInput
-                onChangeText={handleChange("ProfileValues.phone")}
+                onChangeText={(text) => {
+                    setFieldValue(
+                        "ProfileValues.phone",
+                        formatPhoneNumber(text)
+                    );
+                }}
                 keyboardType={"phone-pad"}
                 value={values.ProfileValues.phone}
                 style={styles.input}
