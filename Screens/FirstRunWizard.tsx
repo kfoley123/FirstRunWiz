@@ -78,8 +78,8 @@ export default function FirstRunWizard({ navigation }: FirstRunProps) {
             .max(256, "Must be less than 256 characters")
             .required("email is required"),
         phone: Yup.string()
-            .matches(/^[0-9]{10}$/, "Invalid phone number")
-            .required("Phone number is required"),
+            .required("Phone number is required")
+            .min(14, "Invalid phone number"),
         password: Yup.string()
             .required("Password is required")
             .min(4, "Must be at least 4 characters"),
