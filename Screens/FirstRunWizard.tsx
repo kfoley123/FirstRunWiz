@@ -224,10 +224,13 @@ function checkErrors(errors: FormikErrors<FirstRunValues>, currentStep) {
         return false;
     }
     if (
-        currentStep === 4 &&
+        currentStep === 5 &&
         !errors.operatingHoursStart &&
         !errors.operatingHoursEnd
     ) {
+        return false;
+    }
+    if (currentStep === 6) {
         return false;
     }
 
@@ -253,7 +256,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFF",
         borderBottomColor: "#dedede",
         borderBottomWidth: 1,
-        paddingTop: 40,
+        paddingTop: 20,
         paddingHorizontal: "3%",
     },
 });

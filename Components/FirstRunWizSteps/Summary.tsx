@@ -20,14 +20,12 @@ export default function Summary() {
                     <Text>{values.name}</Text>
                 </View>
 
-                <Seperator />
                 {/* ---------------- Email -------------- */}
                 <View style={styles.row}>
                     <Text style={styles.subheader}>Email:</Text>
                     <Text>{values.email}</Text>
                 </View>
 
-                <Seperator />
                 {/* ----------------  Phone -------------- */}
                 <View style={styles.row}>
                     <Text style={styles.subheader}>Phone:</Text>
@@ -48,13 +46,17 @@ export default function Summary() {
 
                 <View>
                     <Text style={styles.subheader}>Available Days:</Text>
-
-                    {values.availableDays
-                        .filter((day) => day.checked)
-                        .map((day, i) => (
-                            <Text key={i}>{day.label}</Text>
-                        ))}
+                    <View style={styles.dayContainer}>
+                        {values.availableDays
+                            .filter((day) => day.checked)
+                            .map((day, i) => (
+                                <Text style={styles.field} key={i}>
+                                    {day.label}
+                                </Text>
+                            ))}
+                    </View>
                 </View>
+
                 <Seperator />
 
                 {/* ---------------- Deposit Amount -------------- */}
@@ -63,6 +65,7 @@ export default function Summary() {
                     <Text style={styles.subheader}>Deposit Amount:</Text>
                     <Text>{values.deposit}</Text>
                 </View>
+
                 <Seperator />
 
                 {/* ---------------- Operating Hours -------------- */}
@@ -78,7 +81,9 @@ export default function Summary() {
                         <Text>{values.operatingHoursEnd}</Text>
                     </View>
                 </View>
+
                 <Seperator />
+
                 {/* ---------------- Client Notifcations -------------- */}
 
                 <View>
@@ -94,6 +99,7 @@ export default function Summary() {
                         </Text>
                     </View>
                 </View>
+
                 <Seperator />
 
                 {/* ----------Submit Button  ----------- */}
@@ -117,11 +123,20 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 16,
         fontWeight: "500",
-        paddingVertical: 15,
+        paddingTop: 5,
         textAlign: "center",
     },
-    subheader: { fontSize: 14, fontWeight: "500", paddingRight: 5 },
-    field: { paddingRight: 5 },
+    subheader: {
+        fontSize: 14,
+        fontWeight: "600",
+        paddingRight: 5,
+        marginLeft: "6%",
+    },
+    dayContainer: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+    },
+    field: { paddingRight: 5, marginLeft: "6%" },
     row: { flexDirection: "row", paddingVertical: 5 },
     buttonContainer: { alignItems: "center", marginBottom: 100 },
 });

@@ -18,13 +18,7 @@ export default function Step4() {
                 Check which days of the week are you available.
             </Text>
 
-            <View
-                style={{
-                    flexDirection: "row",
-                    justifyContent: "space-evenly",
-                    flexWrap: "wrap",
-                }}
-            >
+            <View style={styles.container}>
                 {values.availableDays.map((day, i) => (
                     <View key={i} style={styles.checkboxContainer}>
                         <Checkbox
@@ -44,14 +38,17 @@ export default function Step4() {
                 ))}
             </View>
 
-            {/* <Errors errorMessage={errors.availableDays} /> */}
+            <Errors errorMessage={errors.availableDays as string} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        padding: "1%",
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        flexWrap: "wrap",
+        marginBottom: 25,
     },
     header: {
         fontSize: 16,
