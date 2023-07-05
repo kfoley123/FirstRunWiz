@@ -98,7 +98,7 @@ export default function Settings() {
 
     const [noNotificationsChecked, setNoNotificationsChecked] = useState(true);
 
-    //TODO: update state variable to use the SMS & Email form values from storgae when those are availble rather than being hard coded
+    //TODO: update state variable to use the SMS & Email form values from storage when those are availble rather than being hard coded
 
     return (
         <Formik
