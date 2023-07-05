@@ -55,8 +55,8 @@ export default function FirstRunWizard({ navigation }: FirstRunProps) {
             { value: 6, label: "Saturday", checked: false },
         ],
         deposit: "0.00",
-        regularHoursStart: "",
-        regularHoursEnd: "",
+        operatingHoursStart: "",
+        operatingHoursEnd: "",
         clientEmailNotifications: false,
         clientSMSNotifications: false,
 
@@ -84,12 +84,13 @@ export default function FirstRunWizard({ navigation }: FirstRunProps) {
             .required("Password is required")
             .min(4, "Must be at least 4 characters"),
         confirmPassword: Yup.string()
-            .required("Password is required")
+            .required("Confirm password is required")
             .test("Passwords match", "Passwords must match", function (value) {
                 const { password } = this.parent;
-                if (password !== value) {
-                    return false;
+                if ((password as string) === value) {
+                    return true;
                 }
+                return false;
             }),
         businessName: Yup.string()
             .required("Business Name is required")
@@ -111,22 +112,22 @@ export default function FirstRunWizard({ navigation }: FirstRunProps) {
                 }
             ),
         deposit: Yup.string().matches(/^\d+(?:\.\d{1,2})?$/, "Invalid amount"),
-        regularHoursStart: Yup.string().required(
-            "Regular hours start time is required"
+        operatingHoursStart: Yup.string().required(
+            "Operating hours start time is required"
         ),
-        regularHoursEnd: Yup.string()
-            .required("Regular hours end time is required")
+        operatingHoursEnd: Yup.string()
+            .required("Operating hours end time is required")
             .test(
                 "isValidTime",
                 "End time must be later than start time",
                 function (value) {
-                    const { regularHoursStart } = this.parent;
-                    if (!regularHoursStart && !value) {
+                    const { operatingHoursStart } = this.parent;
+                    if (!operatingHoursStart && !value) {
                         return true;
                     }
-                    if (regularHoursStart && value) {
+                    if (operatingHoursStart && value) {
                         const startTime = Number(
-                            regularHoursStart.split(":", 1)
+                            operatingHoursStart.split(":", 1)
                         );
                         const endTime = Number(value.split(":", 1));
                         return endTime > startTime;
@@ -210,6 +211,26 @@ function checkErrors(errors: FormikErrors<FirstRunValues>, currentStep) {
     if (currentStep === 0 && !errors.name && !errors.email && !errors.phone) {
         return false;
     }
+    if (currentStep === 1 && !errors.password && !errors.confirmPassword) {
+        return false;
+    }
+    if (currentStep === 2 && !errors.businessName) {
+        return false;
+    }
+    if (currentStep === 3 && !errors.availableDays) {
+        return false;
+    }
+    if (currentStep === 4 && !errors.deposit) {
+        return false;
+    }
+    if (
+        currentStep === 4 &&
+        !errors.operatingHoursStart &&
+        !errors.operatingHoursEnd
+    ) {
+        return false;
+    }
+
     return true;
 }
 

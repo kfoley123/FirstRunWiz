@@ -4,8 +4,8 @@ export type SettingsFormValues = {
     businessName: string;
     availableDays: AvailableDay[];
     deposit: string;
-    regularHoursStart: string;
-    regularHoursEnd: string;
+    operatingHoursStart: string;
+    operatingHoursEnd: string;
     clientEmailNotifications: boolean;
     clientSMSNotifications: boolean;
 };
@@ -20,8 +20,8 @@ export type FirstRunValues = {
     businessName: string;
     availableDays: AvailableDay[];
     deposit: string;
-    regularHoursStart: string;
-    regularHoursEnd: string;
+    operatingHoursStart: string;
+    operatingHoursEnd: string;
     clientEmailNotifications: boolean;
     clientSMSNotifications: boolean;
     name: string;

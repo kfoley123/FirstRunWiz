@@ -65,17 +65,17 @@ export default function Summary() {
                 </View>
                 <Seperator />
 
-                {/* ---------------- Regular Hours -------------- */}
+                {/* ---------------- Operating Hours -------------- */}
 
                 <View>
-                    <Text style={styles.subheader}>Regular Hours</Text>
+                    <Text style={styles.subheader}>Operating Hours</Text>
                     <View style={styles.row}>
                         <Text style={styles.field}>Start Time:</Text>
-                        <Text>{values.regularHoursStart}</Text>
+                        <Text>{values.operatingHoursStart}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.field}>End Time:</Text>
-                        <Text>{values.regularHoursEnd}</Text>
+                        <Text>{values.operatingHoursEnd}</Text>
                     </View>
                 </View>
                 <Seperator />

@@ -23,31 +23,31 @@ export default function Step6() {
                     data={fullDayTimes()}
                     renderDropdownIcon={() => <Text>▼</Text>}
                     buttonStyle={styles.dropdownButtonStyle}
-                    onSelect={handleChange("regularHoursStart")}
-                    onBlur={() => handleBlur("regularHoursStart")}
+                    onSelect={handleChange("operatingHoursStart")}
+                    onBlur={() => handleBlur("operatingHoursStart")}
                     defaultButtonText={"Set"}
-                    defaultValue={values.regularHoursStart}
+                    defaultValue={values.operatingHoursStart}
                 />
             </View>
 
-            <Errors errorMessage={errors.regularHoursStart} />
+            <Errors errorMessage={errors.operatingHoursStart} />
 
-            {values.regularHoursStart && (
+            {values.operatingHoursStart && (
                 <View style={styles.selectContainer}>
                     <Text style={styles.option}>End Time</Text>
                     <SelectDropdown
-                        data={generateEndTimes(values.regularHoursStart)}
+                        data={generateEndTimes(values.operatingHoursStart)}
                         renderDropdownIcon={() => <Text>▼</Text>}
                         buttonStyle={styles.dropdownButtonStyle}
-                        onSelect={handleChange("regularHoursEnd")}
-                        onBlur={() => handleBlur("regularHoursEnd")}
+                        onSelect={handleChange("operatingHoursEnd")}
+                        onBlur={() => handleBlur("operatingHoursEnd")}
                         defaultButtonText={"Set"}
-                        defaultValue={values.regularHoursEnd}
+                        defaultValue={values.operatingHoursEnd}
                     />
                 </View>
             )}
 
-            <Errors errorMessage={errors.regularHoursEnd} />
+            <Errors errorMessage={errors.operatingHoursEnd} />
         </View>
     );
 }
