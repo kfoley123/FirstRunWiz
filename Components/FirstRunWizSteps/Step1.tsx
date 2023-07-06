@@ -8,7 +8,7 @@ import { formatPhoneNumber } from "../../Helpers/helpers";
 export default function Step1() {
     const { values, errors, handleChange, setFieldValue } =
         useFormikContext<FirstRunValues>();
-    console.log(errors);
+
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.header}>Name</Text>
@@ -36,9 +36,9 @@ export default function Step1() {
             <Text style={styles.header}>Phone Number </Text>
 
             <TextInput
-                onChangeText={(text) => {
-                    setFieldValue("phone", formatPhoneNumber(text));
-                }}
+                onChangeText={(text) =>
+                    setFieldValue("phone", formatPhoneNumber(text))
+                }
                 keyboardType={"phone-pad"}
                 value={values.phone}
                 style={styles.input}
