@@ -140,10 +140,7 @@ export default function FirstRunWizard({ navigation }: FirstRunProps) {
         <Formik
             initialValues={initalFormValues}
             validationSchema={FirstRunSchema}
-            onSubmit={(values) => {
-                console.log(values);
-                // artistFirstRun(values, user, props.route.params.setFlag);
-            }}
+            onSubmit={(values) => console.log(values)}
             validateOnMount={true}
         >
             {({ errors }) => (

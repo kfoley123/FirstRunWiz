@@ -5,8 +5,6 @@ import { FirstRunValues } from "../../customTypes";
 import Seperator from "../Seperator";
 import CustomButton from "../CustomButton";
 
-// BUG: if switch selector is changed to "set" and then you go back a page and then come back, page will remember switch selector being set to "set" but state variable will be reset so checkboxes aren't rendered. This should be fixed with async
-
 export default function Summary() {
     const { values, errors, handleSubmit } = useFormikContext<FirstRunValues>();
 
