@@ -17,12 +17,8 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import CustomButton from "../Components/CustomButton";
 import Errors from "../Components/Errors";
-
-type ProfileFormValues = {
-    name: string;
-    email: string;
-    phone: string;
-};
+import { ProfileFormValues } from "../customTypes";
+import { formatPhoneNumber } from "../Helpers/helpers";
 
 export default function Profile() {
     const [modalVisible, setModalVisible] = useState(false);
@@ -30,7 +26,7 @@ export default function Profile() {
     const initalFormValues: ProfileFormValues = {
         name: "Cammy White",
         email: "123@CammyWhite.com",
-        phone: "5555555555",
+        phone: "(555) 555 5555",
     };
 
     const ProfileSchema = Yup.object().shape({
@@ -47,7 +43,7 @@ export default function Profile() {
             .max(256, "Must be less than 256 characters")
             .required("email is required"),
         phone: Yup.string()
-            .matches(/^[0-9]{10}$/, "Invalid phone number")
+            .min(14, "Invalid phone number")
             .required("Phone number is required"),
     });
 
@@ -175,9 +171,13 @@ export default function Profile() {
 
                                 <TextInput
                                     style={styles.input}
-                                    onBlur={handleBlur("phone")}
                                     keyboardType={"phone-pad"}
-                                    onChangeText={handleChange("phone")}
+                                    onChangeText={(text) => {
+                                        setFieldValue(
+                                            "phone",
+                                            formatPhoneNumber(text)
+                                        );
+                                    }}
                                     value={values.phone}
                                 />
 
