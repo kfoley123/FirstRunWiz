@@ -16,17 +16,7 @@ export type ProfileFormValues = {
     phone: string;
 };
 
-export type FirstRunValues = {
-    businessName: string;
-    availableDays: AvailableDay[];
-    deposit: string;
-    operatingHoursStart: string;
-    operatingHoursEnd: string;
-    clientEmailNotifications: boolean;
-    clientSMSNotifications: boolean;
-    name: string;
-    email: string;
-    phone: string;
+export interface FirstRunValues extends SettingsFormValues, ProfileFormValues {
     password: string;
     confirmPassword: string;
-};
+}
