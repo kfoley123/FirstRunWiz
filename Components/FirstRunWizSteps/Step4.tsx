@@ -15,7 +15,7 @@ export default function Step4() {
             <Text style={styles.header}>Available Days</Text>
 
             <Text style={styles.sectionInfo}>
-                Check which days of the week are you available.
+                Check the days of the week that you are available.
             </Text>
 
             <View style={styles.container}>
