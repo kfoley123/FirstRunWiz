@@ -9,6 +9,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./Screens/Login";
 import FirstRunWizard from "./Screens/FirstRunWizard";
 
+//TODO: find out the correct typing for this
 type RootStackParamList = {
     Login: undefined;
     FirstRunWizard: undefined;
