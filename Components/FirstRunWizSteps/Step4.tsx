@@ -39,6 +39,7 @@ export default function Step4() {
             </View>
 
             <Errors errorMessage={errors.availableDays as string} />
+            {/* had to typecast this as a string as TypeScript was expecting that it might be a string[] */}
         </View>
     );
 }
