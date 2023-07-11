@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
     StyleSheet,
@@ -32,6 +32,7 @@ const LoginSchema = Yup.object().shape({
 
 export default function Login({ navigation }) {
     const state = useGlobalState();
+    const [signInError, setSignInError] = useState(false);
 
     return (
         <Formik
@@ -41,7 +42,7 @@ export default function Login({ navigation }) {
                 loginUser(values).then((data) => {
                     if (data) {
                         state.setUser(data);
-                    } else console.log("error");
+                    } else setSignInError(true);
                 })
             }
         >
@@ -85,6 +86,12 @@ export default function Login({ navigation }) {
                         <Text style={styles.signInText}>Sign In</Text>
                     </TouchableOpacity>
 
+                    {signInError && (
+                        <Text style={styles.errors}>
+                            Authentication failed, please try again
+                        </Text>
+                    )}
+
                     <View style={styles.noAccountTextContainer}>
                         <Text> Don't have an account? </Text>
                         <TouchableOpacity
@@ -122,6 +129,12 @@ const styles = StyleSheet.create({
             width: 0,
             height: 2,
         },
+    },
+    errors: {
+        color: "red",
+        textAlign: "center",
+        fontWeight: "600",
+        marginVertical: 5,
     },
     signInButton: {
         justifyContent: "center",
