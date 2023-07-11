@@ -1,4 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FirstRunValues } from "./customTypes";
+import { LoginFormValues } from "./Screens/Login";
 
 export const storeData = async (key, value) => {
     try {
@@ -9,16 +11,25 @@ export const storeData = async (key, value) => {
     }
 };
 
-export const getData = async (key) => {
+export async function getData(key): Promise<FirstRunValues> {
+    return await AsyncStorage.getItem(key).then((data) =>
+        JSON.parse(data as string)
+    );
+}
+
+export const loginUser = async (loginData: LoginFormValues) => {
     try {
-        const value = await AsyncStorage.getItem(key);
-        if (value !== null) {
-            console.log(JSON.parse(value));
-            //value previously stored
+        const response = await AsyncStorage.getItem(loginData.email);
+        if (
+            response !== null &&
+            JSON.parse(response).password === loginData.password
+        ) {
+            return JSON.parse(response);
         }
-    } catch (e) {
-        console.log(e);
+    } catch (error) {
+        console.log(error);
     }
+    return null;
 };
 
 export const getAllKeys = async () => {
