@@ -19,14 +19,19 @@ import CustomButton from "../Components/CustomButton";
 import Errors from "../Components/Errors";
 import { ProfileFormValues } from "../customTypes";
 import { formatPhoneNumber } from "../Helpers/helpers";
+import { useGlobalState } from "../store";
+import { storeData } from "../API";
 
 export default function Profile() {
+    const state = useGlobalState();
+    const user = state.get();
+
     const [modalVisible, setModalVisible] = useState(false);
 
     const initalFormValues: ProfileFormValues = {
-        name: "Cammy White",
-        email: "123@CammyWhite.com",
-        phone: "(555) 555 5555",
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
     };
 
     const ProfileSchema = Yup.object().shape({
@@ -51,7 +56,11 @@ export default function Profile() {
         <Formik
             initialValues={initalFormValues}
             validationSchema={ProfileSchema}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values) =>
+                storeData(values.email, values).then(() =>
+                    state.setUserProfile(values)
+                )
+            }
         >
             {({
                 handleChange,

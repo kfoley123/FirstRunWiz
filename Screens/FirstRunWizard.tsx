@@ -145,7 +145,6 @@ export default function FirstRunWizard({ navigation }: FirstRunProps) {
             initialValues={initalFormValues}
             validationSchema={FirstRunSchema}
             onSubmit={(values) => {
-                console.log(values);
                 storeData(values.email, values).then(() =>
                     state.setUser(values)
                 );

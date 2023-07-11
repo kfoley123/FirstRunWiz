@@ -1,5 +1,5 @@
 import { hookstate, State, useHookstate } from "@hookstate/core";
-import { FirstRunValues } from "./customTypes";
+import { FirstRunValues, ProfileFormValues } from "./customTypes";
 
 const globalState = hookstate<FirstRunValues>({
     businessName: "",
@@ -19,6 +19,10 @@ const globalState = hookstate<FirstRunValues>({
 const wrapState = (state: State<FirstRunValues>) => ({
     get: () => state.value,
     setUser: (user: FirstRunValues) => state.set(user),
+    setUserProfile: (values: ProfileFormValues) =>
+        state.set((prevState) => {
+            return { ...prevState, ...values };
+        }),
 });
 
 export const useGlobalState = () => wrapState(useHookstate(globalState));
