@@ -12,7 +12,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import Errors from "../Components/Errors";
 import { useGlobalState } from "../store";
-import { loginUser } from "../API";
+import { getAllKeys, getData, loginUser } from "../API";
 
 export type LoginFormValues = { email: string; password: string };
 
@@ -32,13 +32,18 @@ const LoginSchema = Yup.object().shape({
 
 export default function Login({ navigation }) {
     const state = useGlobalState();
+    getAllKeys();
+    getData("me@example.com").then((data) => console.log(data));
     return (
         <Formik
             initialValues={initalFormValues}
             validationSchema={LoginSchema}
             onSubmit={(values) =>
                 loginUser(values).then((data) => {
-                    if (data) state.setUser(data);
+                    console.log(data);
+                    if (data) {
+                        state.setUser(data);
+                    } else console.log("error");
                 })
             }
         >

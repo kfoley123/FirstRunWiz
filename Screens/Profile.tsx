@@ -57,7 +57,7 @@ export default function Profile() {
             initialValues={initalFormValues}
             validationSchema={ProfileSchema}
             onSubmit={(values) =>
-                storeData(values.email, values).then(() =>
+                storeData(values.email, { ...user, ...values }).then(() =>
                     state.setUserProfile(values)
                 )
             }
