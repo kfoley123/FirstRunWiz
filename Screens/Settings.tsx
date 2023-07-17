@@ -21,18 +21,9 @@ import {
     fullDayTimes,
     generateEndTimes,
 } from "../Helpers/helpers";
-
-type AvailableDay = { value: number; label: string; checked: boolean };
-
-type SettingsValues = {
-    businessName: string;
-    availableDays: AvailableDay[];
-    deposit: string;
-    operatingHoursStart: string;
-    operatingHoursEnd: string;
-    clientEmailNotifications: boolean;
-    clientSMSNotifications: boolean;
-};
+import { useGlobalState } from "../store";
+import { storeData } from "../API";
+import { AvailableDay, FirstRunValues, SettingsValues } from "../customTypes";
 
 const SettingsSchema = Yup.object().shape({
     businessName: Yup.string().required("Business Name is required"),
@@ -69,25 +60,10 @@ const SettingsSchema = Yup.object().shape({
         ),
 });
 
-const settingsFormValues: SettingsValues = {
-    businessName: "",
-    availableDays: [
-        { value: 0, label: "Sunday", checked: false },
-        { value: 1, label: "Monday", checked: false },
-        { value: 2, label: "Tuesday", checked: false },
-        { value: 3, label: "Wednesday", checked: false },
-        { value: 4, label: "Thursday", checked: false },
-        { value: 5, label: "Friday", checked: false },
-        { value: 6, label: "Saturday", checked: false },
-    ],
-    deposit: "0.00",
-    operatingHoursStart: "",
-    operatingHoursEnd: "",
-    clientEmailNotifications: false,
-    clientSMSNotifications: false,
-};
-
 export default function Settings() {
+    const state = useGlobalState();
+    const user = state.get();
+
     const [sectionInfoVisible, setSectionInfoVisible] = useState({
         businessName: false,
         workingDays: false,
@@ -96,15 +72,29 @@ export default function Settings() {
         clientNotifications: false,
     });
 
-    const [noNotificationsChecked, setNoNotificationsChecked] = useState(true);
+    const [noNotificationsChecked, setNoNotificationsChecked] = useState(
+        !user.clientEmailNotifications && !user.clientSMSNotifications
+    );
 
-    //TODO: update state variable to use the SMS & Email form values from storage when those are availble rather than being hard coded
+    const initalValues: SettingsValues = {
+        businessName: user.businessName,
+        availableDays: user.availableDays as AvailableDay[],
+        deposit: user.deposit,
+        operatingHoursStart: user.operatingHoursStart,
+        operatingHoursEnd: user.operatingHoursEnd,
+        clientEmailNotifications: user.clientEmailNotifications,
+        clientSMSNotifications: user.clientSMSNotifications,
+    };
 
     return (
         <Formik
-            initialValues={settingsFormValues}
+            initialValues={initalValues}
             validationSchema={SettingsSchema}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values) => {
+                storeData(user.email, { ...user, ...values }).then((values) =>
+                    state.setUserSettings(values)
+                );
+            }}
         >
             {({
                 handleChange,
@@ -153,7 +143,7 @@ export default function Settings() {
                     <TextInput
                         onChangeText={handleChange("businessName")}
                         autoCapitalize="words"
-                        value={values.businessName}
+                        defaultValue={values.businessName}
                         style={styles.input}
                     ></TextInput>
 
@@ -462,6 +452,11 @@ export default function Settings() {
                             buttonWidth={75}
                             buttonOnPress={handleSubmit}
                         />
+                        {Object.keys(errors).length > 0 && (
+                            <Text style={styles.errors}>
+                                Please Correct Errors
+                            </Text>
+                        )}
                     </View>
                 </ScrollView>
             )}
@@ -506,7 +501,7 @@ const styles = StyleSheet.create({
     infoIcon: { fontSize: 20, color: "black", marginLeft: 5 },
     sectionInfo: { paddingHorizontal: "5%", marginBottom: 10, display: "none" },
     sectionInfoOpen: { paddingHorizontal: "5%", marginBottom: 10 },
-    buttonContainer: { alignItems: "center", marginBottom: 30 },
+    buttonContainer: { alignItems: "center", marginBottom: 10 },
     depositInput: {
         borderWidth: 1,
         borderColor: "slategray",

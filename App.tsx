@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Settings from "./Screens/Settings";
@@ -8,6 +8,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./Screens/Login";
 import FirstRunWizard from "./Screens/FirstRunWizard";
+import { getData } from "./API";
+import { useGlobalState } from "./store";
 
 //TODO: find out the correct typing for this
 type RootStackParamList = {
@@ -17,10 +19,10 @@ type RootStackParamList = {
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
-// TODO: replace "dog" with data from storage when available
-const dog = true;
 
 export default function App() {
+    const user = useGlobalState().get();
+
     const getTabBarIcon = (route, focused, color, size) => {
         switch (route.name) {
             case "Profile":
@@ -41,8 +43,8 @@ export default function App() {
                 );
         }
     };
-    // TODO: replace "dog" with data from storage when available
-    if (dog === true) {
+
+    if (user.email === "") {
         return (
             <NavigationContainer>
                 <Stack.Navigator>

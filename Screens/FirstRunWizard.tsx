@@ -20,10 +20,14 @@ import Step5 from "../Components/FirstRunWizSteps/Step5";
 import Step6 from "../Components/FirstRunWizSteps/Step6";
 import Step7 from "../Components/FirstRunWizSteps/Step7";
 import Summary from "../Components/FirstRunWizSteps/Summary";
+import { storeData } from "../API";
+import { useGlobalState } from "../store";
 
 type FirstRunProps = { navigation: any };
 
 export default function FirstRunWizard({ navigation }: FirstRunProps) {
+    const state = useGlobalState();
+
     const wizard = useRef<WizardRef>(null);
     const [isFirstStep, setIsFirstStep] = useState(true);
     const [isLastStep, setIsLastStep] = useState(false);
@@ -140,7 +144,11 @@ export default function FirstRunWizard({ navigation }: FirstRunProps) {
         <Formik
             initialValues={initalFormValues}
             validationSchema={FirstRunSchema}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values) => {
+                storeData(values.email, values).then(() =>
+                    state.setUser(values)
+                );
+            }}
             validateOnMount={true}
         >
             {({ errors }) => (
