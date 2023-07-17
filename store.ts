@@ -5,7 +5,7 @@ import {
     SettingsFormValues,
 } from "./customTypes";
 
-const globalState = hookstate<FirstRunValues>({
+const initalState = {
     businessName: "",
     availableDays: [],
     deposit: "",
@@ -18,7 +18,9 @@ const globalState = hookstate<FirstRunValues>({
     phone: "",
     password: "",
     confirmPassword: "",
-});
+};
+
+const globalState = hookstate<FirstRunValues>(initalState);
 
 const wrapState = (state: State<FirstRunValues>) => ({
     get: () => state.value,
@@ -31,6 +33,7 @@ const wrapState = (state: State<FirstRunValues>) => ({
         state.set((prevState) => {
             return { ...prevState, ...values };
         }),
+    logOut: () => state.set(initalState),
 });
 
 export const useGlobalState = () => wrapState(useHookstate(globalState));

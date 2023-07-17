@@ -115,6 +115,15 @@ export default function Profile() {
                     />
 
                     <Seperator />
+                    <View style={styles.buttonContainer}>
+                        <CustomButton
+                            title="LogOut"
+                            buttonWidth={275}
+                            buttonOnPress={() => {
+                                state.logOut();
+                            }}
+                        />
+                    </View>
 
                     <Modal
                         animationType="slide"
@@ -285,4 +294,5 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingVertical: "2%",
     },
+    buttonContainer: { alignItems: "center" },
 });
