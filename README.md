@@ -32,7 +32,7 @@ Kortney Foley
 
 ## Description
 
-## I designed this App to showcase some UI features I built in react native. It allows a user to create a new profile through a First Run Wizard on their first use of the app, then keeps the data in local storage. Existing users can log back in and update their Profile or Settings information.
+I designed this App to showcase some UI features I built in react native. It allows a user to create a new profile through a First Run Wizard on their first use of the app, then keeps the data in local storage. Existing users can log back in and update their Profile or Settings information.
 
 ## Netlify Link
 
