@@ -2,6 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FirstRunValues } from "./customTypes";
 import { LoginFormValues } from "./Screens/Login";
 
+//adds a single key/value pair to storage
+
 export const storeData = async (key, value) => {
     try {
         const jsonValue = JSON.stringify(value);
@@ -11,11 +13,15 @@ export const storeData = async (key, value) => {
     }
 };
 
+// pulls out data with specific value from storage based on provided key
+
 export async function getData(key): Promise<FirstRunValues> {
     return await AsyncStorage.getItem(key).then((data) =>
         JSON.parse(data as string)
     );
 }
+
+// checks to see if email user tries to login with is in storage and if so checks to see if the password matches. If yes to both return user and all their data
 
 export const loginUser = async (loginData: LoginFormValues) => {
     try {
@@ -32,6 +38,8 @@ export const loginUser = async (loginData: LoginFormValues) => {
     return null;
 };
 
+// gets all keys from storage and console.logs them
+
 export const getAllKeys = async () => {
     let keys: readonly string[] = [];
     try {
@@ -42,6 +50,8 @@ export const getAllKeys = async () => {
     console.log(keys);
 };
 
+// gets multiple keys you specify from storage and console.logs them
+
 export const getMultiple = async (keys: string[]) => {
     let values;
     try {
@@ -51,10 +61,3 @@ export const getMultiple = async (keys: string[]) => {
     }
     console.log(values);
 };
-
-// storeData("playerOne", { name: "Cammy", height: `5'5"`, wins: 10 });
-
-// storeData("playerTwo", { name: "ChunLi", height: `5'7"`, wins: 10 });
-// getData("playerOne");
-// getAllKeys();
-// getMultiple(["playerOne", "playerTwo"]);
