@@ -68,8 +68,7 @@ export default function Login({ navigation }) {
 
                     <TextInput
                         style={styles.input}
-                        //TODO: add this when app is live, leaving it out for ease of use during building/testing
-                        // secureTextEntry={true}
+                        secureTextEntry={true}
                         placeholder="Password"
                         onChangeText={handleChange("password")}
                         value={values.password}
