@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useFormikContext } from "formik";
 import { FirstRunValues } from "../../customTypes";
-import Errors from "../Errors";
 import { checkboxHitSlop } from "../../Helpers/helpers";
 import Checkbox from "expo-checkbox";
 
@@ -38,8 +37,12 @@ export default function Step4() {
                 ))}
             </View>
 
-            <Errors errorMessage={errors.availableDays as string} />
-            {/* had to typecast this as a string as TypeScript was expecting that it might be a string[] */}
+            {errors.availableDays ? (
+                <Text style={styles.errors}>
+                    {errors.availableDays as string}
+                    {/* had to typecast this as a string as TypeScript was expecting that it might be a string[] */}
+                </Text>
+            ) : null}
         </View>
     );
 }
@@ -57,6 +60,12 @@ const styles = StyleSheet.create({
         paddingTop: "33%",
         paddingBottom: "4%",
         textAlign: "center",
+    },
+    errors: {
+        color: "red",
+        textAlign: "center",
+        fontWeight: "600",
+        marginVertical: 5,
     },
     sectionInfo: { textAlign: "center", marginBottom: 10 },
     checkboxContainer: { alignItems: "center" },
