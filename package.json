@@ -18,10 +18,14 @@
         "@types/react": "~18.0.27",
         "@types/react-native": "^0.72.2",
         "@types/react-test-renderer": "^18.0.0",
+        "eslint-config-prettier": "^8.8.0",
+        "eslint-config-universe": "^11.3.0",
+        "eslint-plugin-react-hooks": "^4.6.0",
         "expo": "~48.0.18",
         "expo-checkbox": "~2.3.1",
         "expo-status-bar": "~1.4.4",
         "formik": "^2.4.2",
+        "prettier": "^3.0.0",
         "react": "18.2.0",
         "react-native": "0.71.8",
         "react-native-select-dropdown": "^3.3.4",
@@ -31,7 +35,15 @@
         "yup": "^1.2.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.20.0"
+        "@babel/core": "^7.20.0",
+        "@typescript-eslint/eslint-plugin": "^6.1.0",
+        "@typescript-eslint/parser": "^6.1.0",
+        "eslint": "^8.45.0",
+        "eslint-plugin-react": "^7.32.2",
+        "eslint-plugin-unicorn": "^48.0.0"
+    },
+    "eslintConfig": {
+        "extends": "universe/native"
     },
     "private": true
 }
