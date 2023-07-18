@@ -4,7 +4,7 @@ import { LoginFormValues } from './Screens/Login';
 
 //adds a single key/value pair to storage
 
-export const storeData = async (key, value) => {
+export const storeData = async (key: string, value: FirstRunValues) => {
   try {
     const jsonValue = JSON.stringify(value);
     return await AsyncStorage.setItem(key, jsonValue);
