@@ -12,21 +12,21 @@ Kortney Foley
 
 ## Technologies Used
 
--   React Native
--   HTML
--   JavaScript
--   CSS
--   TypeScript
--   [Expo](https://expo.dev/)
--   [Hookstate](https://www.npmjs.com/package/@hookstate/core)
--   [React Native Async Storage](https://www.npmjs.com/package/@react-native-async-storage/async-storage)
--   [React Navigation Bottom Tabs](https://www.npmjs.com/package/@react-navigation/bottom-tabs)
--   [Expo Checkbox](https://www.npmjs.com/package/expo-checkbox)
--   [Formik](https://www.npmjs.com/package/formik)
--   [Yup](https://www.npmjs.com/package/yup)
--   [React Native Select Dropdown](https://www.npmjs.com/package/react-native-select-dropdown)
--   [React Native Switch Selector](https://www.npmjs.com/package/react-native-switch-selector)
--   [React Native Wizard](https://www.npmjs.com/package/react-native-wizard)
+- React Native
+- HTML
+- JavaScript
+- CSS
+- TypeScript
+- [Expo](https://expo.dev/)
+- [Hookstate](https://www.npmjs.com/package/@hookstate/core)
+- [React Native Async Storage](https://www.npmjs.com/package/@react-native-async-storage/async-storage)
+- [React Navigation Bottom Tabs](https://www.npmjs.com/package/@react-navigation/bottom-tabs)
+- [Expo Checkbox](https://www.npmjs.com/package/expo-checkbox)
+- [Formik](https://www.npmjs.com/package/formik)
+- [Yup](https://www.npmjs.com/package/yup)
+- [React Native Select Dropdown](https://www.npmjs.com/package/react-native-select-dropdown)
+- [React Native Switch Selector](https://www.npmjs.com/package/react-native-switch-selector)
+- [React Native Wizard](https://www.npmjs.com/package/react-native-wizard)
 
 ---
 
@@ -42,11 +42,9 @@ WIP
 
 ## Getting Started
 
-WIP
-
--   npm install
--   npm run start
--   viewed on localhost:3000
+- npm install
+- npx expo start
+- make sure you have expo app installed on your phone to view or you can download an emulator to view it on [web](https://docs.expo.dev/workflow/ios-simulator/)
 
 ---
 
