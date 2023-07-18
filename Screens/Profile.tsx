@@ -16,7 +16,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import CustomButton from '../Components/CustomButton';
-import { ProfileFormValues } from '../customTypes';
+import { FirstRunValues, ProfileFormValues } from '../customTypes';
 import { formatPhoneNumber } from '../Helpers/helpers';
 import { useGlobalState } from '../store';
 import { storeData } from '../API';
@@ -51,7 +51,9 @@ export default function Profile() {
       initialValues={initalFormValues}
       validationSchema={ProfileSchema}
       onSubmit={(values) =>
-        storeData(values.email, { ...user, ...values }).then(() => state.setUserProfile(values))
+        storeData(values.email, { ...user, ...values } as FirstRunValues).then(() =>
+          state.setUserProfile(values),
+        )
       }
     >
       {({ handleChange, handleBlur, handleSubmit, setFieldValue, resetForm, values, errors }) => (
