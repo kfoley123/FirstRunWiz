@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 import { useFormikContext } from "formik";
 import { FirstRunValues } from "../../customTypes";
-import Errors from "../Errors";
 
 export default function Step2() {
     const { values, errors, handleChange, handleBlur } =
@@ -16,11 +15,12 @@ export default function Step2() {
                 autoCapitalize="words"
                 value={values.password}
                 style={styles.input}
-                //TODO: add this when app is live, leaving it out for ease of use during building/testing
-                // secureTextEntry={true}
+                secureTextEntry={true}
             ></TextInput>
 
-            <Errors errorMessage={errors.password} />
+            {errors.password ? (
+                <Text style={styles.errors}>{errors.password}</Text>
+            ) : null}
 
             <Text style={styles.header}> Confirm Password</Text>
 
@@ -29,11 +29,12 @@ export default function Step2() {
                 autoCapitalize="words"
                 value={values.confirmPassword}
                 style={styles.input}
-                //TODO: add this when app is live, leaving it out for ease of use during building/testing
-                // secureTextEntry={true}
+                secureTextEntry={true}
             ></TextInput>
 
-            <Errors errorMessage={errors.confirmPassword} />
+            {errors.confirmPassword ? (
+                <Text style={styles.errors}>{errors.confirmPassword}</Text>
+            ) : null}
         </View>
     );
 }
@@ -47,6 +48,12 @@ const styles = StyleSheet.create({
         fontWeight: "400",
         paddingTop: "7%",
         marginLeft: "11%",
+    },
+    errors: {
+        color: "red",
+        textAlign: "center",
+        fontWeight: "600",
+        marginVertical: 5,
     },
     input: {
         backgroundColor: "white",

@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text, TextInput, SafeAreaView } from "react-native";
 import { useFormikContext } from "formik";
 import { FirstRunValues, SettingsFormValues } from "../../customTypes";
-import Errors from "../Errors";
 import { formatPhoneNumber } from "../../Helpers/helpers";
 
 export default function Step1() {
@@ -20,7 +19,9 @@ export default function Step1() {
                 style={styles.input}
             ></TextInput>
 
-            <Errors errorMessage={errors.name} />
+            {errors.name ? (
+                <Text style={styles.errors}>{errors.name}</Text>
+            ) : null}
 
             <Text style={styles.header}>Email </Text>
 
@@ -31,7 +32,9 @@ export default function Step1() {
                 style={styles.input}
             ></TextInput>
 
-            <Errors errorMessage={errors.email} />
+            {errors.email ? (
+                <Text style={styles.errors}>{errors.email}</Text>
+            ) : null}
 
             <Text style={styles.header}>Phone Number </Text>
 
@@ -44,7 +47,9 @@ export default function Step1() {
                 style={styles.input}
             ></TextInput>
 
-            <Errors errorMessage={errors.phone} />
+            {errors.phone ? (
+                <Text style={styles.errors}>{errors.phone}</Text>
+            ) : null}
         </SafeAreaView>
     );
 }
@@ -58,6 +63,12 @@ const styles = StyleSheet.create({
         fontWeight: "400",
         paddingVertical: "1%",
         marginLeft: "11%",
+    },
+    errors: {
+        color: "red",
+        textAlign: "center",
+        fontWeight: "600",
+        marginVertical: 5,
     },
     input: {
         backgroundColor: "white",

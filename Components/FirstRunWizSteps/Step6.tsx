@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 import { useFormikContext } from "formik";
 import { FirstRunValues } from "../../customTypes";
-import Errors from "../Errors";
 import { fullDayTimes, generateEndTimes } from "../../Helpers/helpers";
 import SelectDropdown from "react-native-select-dropdown";
 
@@ -30,7 +29,9 @@ export default function Step6() {
                 />
             </View>
 
-            <Errors errorMessage={errors.operatingHoursStart} />
+            {errors.operatingHoursStart ? (
+                <Text style={styles.errors}>{errors.operatingHoursStart}</Text>
+            ) : null}
 
             {values.operatingHoursStart && (
                 <View style={styles.selectContainer}>
@@ -47,7 +48,9 @@ export default function Step6() {
                 </View>
             )}
 
-            <Errors errorMessage={errors.operatingHoursEnd} />
+            {errors.operatingHoursEnd ? (
+                <Text style={styles.errors}>{errors.operatingHoursEnd}</Text>
+            ) : null}
         </View>
     );
 }
@@ -76,4 +79,10 @@ const styles = StyleSheet.create({
         borderColor: "black",
     },
     option: { marginLeft: "7%" },
+    errors: {
+        color: "red",
+        textAlign: "center",
+        fontWeight: "600",
+        marginVertical: 5,
+    },
 });
