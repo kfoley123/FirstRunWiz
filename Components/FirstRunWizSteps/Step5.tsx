@@ -1,8 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
-import { Formik, useFormikContext } from "formik";
+import { useFormikContext } from "formik";
 import { FirstRunValues } from "../../customTypes";
-import Errors from "../Errors";
 
 export default function Step5() {
     const { values, errors, handleChange, handleBlur } =
@@ -28,7 +27,9 @@ export default function Step5() {
                 ></TextInput>
             </View>
 
-            <Errors errorMessage={errors.deposit} />
+            {errors.deposit ? (
+                <Text style={styles.errors}>{errors.deposit}</Text>
+            ) : null}
         </View>
     );
 }
@@ -53,5 +54,11 @@ const styles = StyleSheet.create({
         width: 75,
         height: 30,
         textAlign: "center",
+    },
+    errors: {
+        color: "red",
+        textAlign: "center",
+        fontWeight: "600",
+        marginVertical: 5,
     },
 });

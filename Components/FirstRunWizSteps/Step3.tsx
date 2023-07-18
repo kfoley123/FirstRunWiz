@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 import { useFormikContext } from "formik";
 import { FirstRunValues } from "../../customTypes";
-import Errors from "../Errors";
 
 export default function Step3() {
     const { values, errors, handleChange } = useFormikContext<FirstRunValues>();
@@ -21,7 +20,9 @@ export default function Step3() {
                 style={styles.input}
             ></TextInput>
 
-            <Errors errorMessage={errors.businessName} />
+            {errors.businessName ? (
+                <Text style={styles.errors}>{errors.businessName}</Text>
+            ) : null}
         </View>
     );
 }
@@ -36,6 +37,12 @@ const styles = StyleSheet.create({
         paddingTop: "33%",
         paddingBottom: "4%",
         textAlign: "center",
+    },
+    errors: {
+        color: "red",
+        textAlign: "center",
+        fontWeight: "600",
+        marginVertical: 5,
     },
     sectionInfoOpen: { paddingHorizontal: "6%" },
     input: {

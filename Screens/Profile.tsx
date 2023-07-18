@@ -16,7 +16,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import CustomButton from "../Components/CustomButton";
-import Errors from "../Components/Errors";
 import { ProfileFormValues } from "../customTypes";
 import { formatPhoneNumber } from "../Helpers/helpers";
 import { useGlobalState } from "../store";
@@ -170,8 +169,11 @@ export default function Profile() {
                                     autoCapitalize={"words"}
                                     value={values.name}
                                 />
-
-                                <Errors errorMessage={errors.name} />
+                                {errors.name ? (
+                                    <Text style={styles.errors}>
+                                        {errors.name}
+                                    </Text>
+                                ) : null}
 
                                 <Text style={styles.label}> Email</Text>
 
@@ -183,7 +185,11 @@ export default function Profile() {
                                     value={values.email}
                                 />
 
-                                <Errors errorMessage={errors.email} />
+                                {errors.email ? (
+                                    <Text style={styles.errors}>
+                                        {errors.email}
+                                    </Text>
+                                ) : null}
 
                                 <Text style={styles.label}> Phone</Text>
 
@@ -199,7 +205,11 @@ export default function Profile() {
                                     value={values.phone}
                                 />
 
-                                <Errors errorMessage={errors.phone} />
+                                {errors.phone ? (
+                                    <Text style={styles.errors}>
+                                        {errors.phone}
+                                    </Text>
+                                ) : null}
 
                                 <View style={styles.buttons}>
                                     <CustomButton

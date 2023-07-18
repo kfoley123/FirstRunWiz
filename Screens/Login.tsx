@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import Errors from "../Components/Errors";
 import { useGlobalState } from "../store";
 import { loginUser } from "../API";
 
@@ -63,7 +62,9 @@ export default function Login({ navigation }) {
                         value={values.email}
                     ></TextInput>
 
-                    <Errors errorMessage={errors.email} />
+                    {errors.email ? (
+                        <Text style={styles.errors}>{errors.email}</Text>
+                    ) : null}
 
                     <TextInput
                         style={styles.input}
@@ -74,7 +75,9 @@ export default function Login({ navigation }) {
                         value={values.password}
                     ></TextInput>
 
-                    <Errors errorMessage={errors.password} />
+                    {errors.password ? (
+                        <Text style={styles.errors}>{errors.password}</Text>
+                    ) : null}
 
                     <TouchableOpacity
                         disabled={Object.keys(errors).length > 0}
