@@ -11,7 +11,7 @@ export default function Step2() {
 
       <TextInput
         onChangeText={handleChange('password')}
-        autoCapitalize="words"
+        autoCapitalize="none"
         value={values.password}
         style={styles.input}
         secureTextEntry={true}
@@ -23,7 +23,7 @@ export default function Step2() {
 
       <TextInput
         onChangeText={handleChange('confirmPassword')}
-        autoCapitalize="words"
+        autoCapitalize="none"
         value={values.confirmPassword}
         style={styles.input}
         secureTextEntry={true}
