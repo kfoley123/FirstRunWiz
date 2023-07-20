@@ -37,9 +37,13 @@ I designed this App to showcase some UI features I built in react native. It all
 ## Demonstration
 
 First Login 
+![First Login](https://github.com/kfoley123/FirstRunWiz/assets/86269768/9ef894ca-a128-454c-897c-c7e3a6fea8db)
 
-![First Login](https://github.com/kfoley123/FirstRunWiz/assets/86269768/85fcfbd0-d95f-404a-8244-6287aa1564cd)
 
+Changing Profile/ Settings Info 
+
+
+Returning Login 
 
 
 
