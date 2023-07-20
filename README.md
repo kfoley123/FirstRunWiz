@@ -36,7 +36,12 @@ I designed this App to showcase some UI features I built in react native. It all
 
 ## Demonstration
 
-WIP
+First Login 
+
+![First Login](https://github.com/kfoley123/FirstRunWiz/assets/86269768/85fcfbd0-d95f-404a-8244-6287aa1564cd)
+
+
+
 
 ---
 
