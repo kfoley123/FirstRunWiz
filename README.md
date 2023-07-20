@@ -38,7 +38,8 @@ I designed this App to showcase some UI features I built in react native. It all
 
 First Login 
 
-On first login, users will be directed to the first run wizard to set up their profile and settings.
+On first login, users will be directed to the first run wizard to set up their profile and settings. They can't proceed to the next step in the wizard until there are no errors on the current screen.
+
 ![First Login](https://github.com/kfoley123/FirstRunWiz/assets/86269768/9ef894ca-a128-454c-897c-c7e3a6fea8db)
 
 
