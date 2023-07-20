@@ -44,6 +44,7 @@ Changing Profile/ Settings Info
 
 
 Returning Login 
+![Returning Login](https://github.com/kfoley123/FirstRunWiz/assets/86269768/4a3d59e2-e88a-49c5-85ba-7bd1b98377ed)
 
 
 
