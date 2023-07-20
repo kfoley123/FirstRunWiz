@@ -34,18 +34,23 @@ Kortney Foley
 
 I designed this App to showcase some UI features I built in react native. It allows a user to create a new profile through a First Run Wizard on their first use of the app, then keeps the data in local storage. Existing users can log back in and update their Profile or Settings information.
 
-## Demonstration
+## App Demonstration
 
 First Login 
 ![First Login](https://github.com/kfoley123/FirstRunWiz/assets/86269768/9ef894ca-a128-454c-897c-c7e3a6fea8db)
 
-
-Changing Profile/ Settings Info 
-
+On first login, users will be directed to the first run wizard to set up their profile and settings.
 
 Returning Login 
 ![Returning Login](https://github.com/kfoley123/FirstRunWiz/assets/86269768/4a3d59e2-e88a-49c5-85ba-7bd1b98377ed)
 
+Once you have set up an account, it will be remembered in storage to let you log back in to access your data.
+
+Changing Profile/ Settings Info 
+
+![UpdateSettings:Profile](https://github.com/kfoley123/FirstRunWiz/assets/86269768/31ac2ee0-fafa-426c-b7ff-d7ff0d5f9387)
+
+This clip shows that you can change your profile or settings info and it will be saved in the state and updates will stay up to date after logging out and back in.
 
 
 ---
