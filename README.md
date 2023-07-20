@@ -1,6 +1,6 @@
 # _First Run Wizard Demo React Native_
 
-An app to demo user settings, profile, first run wizard and local storage.
+A mobile app to demo user interface, settings, profile, first run wizard and local storage.
 
 ---
 
@@ -32,7 +32,7 @@ Kortney Foley
 
 ## Description
 
-I designed this App to showcase some UI features I built in react native. It allows a user to create a new profile through a First Run Wizard on their first use of the app, then keeps the data in local storage. Existing users can log back in and update their Profile or Settings information.
+I designed this App to showcase some UI features I built in react native. It allows a user to create a new profile through a First Run Wizard on their first use of the app, then keeps the data in local storage. Existing users can log back in and update their Profile or Settings information. There are some User Experience features built in such as not allowing the user to proceed if there are any errors on the current page of the wizard, clear error messages, considerate checkbox spacing and hitslop, and warnings that come up to ensure the user wants to cancel setup to avoid accidental button mashing. 
 
 ## App Demonstration
 
